@@ -1,0 +1,3 @@
+MAPPINGS = {
+    "posts": "/posts"
+}
