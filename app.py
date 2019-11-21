@@ -1,4 +1,4 @@
-from __future__ import annotations
+"""Entry point for Swot application."""
 
 from backend.route_manager import RouteManager
 
