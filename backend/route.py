@@ -1,5 +1,8 @@
+"""Base methods and functions for creating routes."""
 from flask import Blueprint
 from flask.views import MethodView
+
+from backend.route_manager import RouteManager
 
 
 class Route(MethodView):
@@ -10,9 +13,8 @@ class Route(MethodView):
     path = None
 
     @classmethod
-    def setup(cls: "Route", manager: "backend.route_manager.RouteManager", blueprint: Blueprint):
-        """Setup the view with the blueprint."""
-        print(cls.name)
+    def setup(cls: "Route", manager: RouteManager, blueprint: Blueprint):
+        """Register the view with the blueprint."""
         if not cls.path or not cls.name:
             raise RuntimeError("Routes have name and path defined")
 
