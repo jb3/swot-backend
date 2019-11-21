@@ -7,7 +7,7 @@ import yaml
 def get_config() -> AttrDict:
     """Fetch the configuration from the YAML file."""
     with open("config.yaml") as config:
-        conf = yaml.load(config)
+        conf = yaml.safe_load(config)
 
         return AttrDict(conf)
 

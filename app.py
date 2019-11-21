@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from backend.route_manager import RouteManager
 
 manager = RouteManager()

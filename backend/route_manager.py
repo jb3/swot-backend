@@ -13,7 +13,7 @@ from .route import Route
 class RouteManager:
     """Class to manage routes for the flask application."""
 
-    def __init__(self):
+    def __init__(self: "RouteManager") -> None:
         """Initialise a new route manager and with it a flask application."""
         self.app = Flask(__name__)
 
@@ -23,19 +23,19 @@ class RouteManager:
 
         self.load_routes()
 
-    def run(self):
+    def run(self: "RouteManager") -> None:
         """Start the flask application."""
         self.app.run()
 
     @staticmethod
-    def after_request(response: Response):
-        print(response.headers)
+    def after_request(response: Response) -> Response:
+        """Process a response before it is sent to the client."""
         if "text/html" in response.headers["Content-Type"]:
             response.headers["Content-Type"] = "text/plain"
 
         return response
 
-    def load_routes(self):
+    def load_routes(self: "RouteManager") -> None:
         """Load the routes from the route directories."""
         for bp_name, path in MAPPINGS.items():
             bp = Blueprint(bp_name, bp_name)
