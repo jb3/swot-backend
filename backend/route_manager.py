@@ -3,7 +3,7 @@ import glob
 import importlib
 import inspect
 
-from flask import Flask, Blueprint, Response
+from flask import Blueprint, Flask, Response
 
 from .config import CONFIG
 from .mappings import MAPPINGS

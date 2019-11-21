@@ -20,4 +20,4 @@ jobs:
         pip install -r requirements-ci.txt
     - name: Lint with flake8
       run: |
-        flake8 . --count --max-complexity=10 --max-line-length=127 --statistics
+        flake8 . --count --statistics

@@ -1,7 +1,6 @@
 """Configuration system for Swot Backend."""
-
-from attrdict import AttrDict
 import yaml
+from attrdict import AttrDict
 
 
 def get_config() -> AttrDict:
