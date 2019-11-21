@@ -1,7 +1,7 @@
 from flask import request, jsonify
 from backend.route import Route
 
-class PostTest(Route):
+class PostIndex(Route):
     name = "index"
     path = "/"
 
