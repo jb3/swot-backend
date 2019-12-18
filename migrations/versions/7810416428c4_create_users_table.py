@@ -1,12 +1,13 @@
-"""create users table
+"""
+Create users table.
 
 Revision ID: 7810416428c4
 Revises:
 Create Date: 2019-11-21 15:08:55.551246
 
 """
-from alembic import op
 import sqlalchemy as sa
+from alembic import op
 
 
 # revision identifiers, used by Alembic.
@@ -16,7 +17,7 @@ branch_labels = None
 depends_on = None
 
 
-def upgrade():
+def upgrade() -> None:
     """Upgrade the database to create the users table."""
     op.create_table(
         'users',
@@ -28,6 +29,6 @@ def upgrade():
     )
 
 
-def downgrade():
+def downgrade() -> None:
     """Downgrade the database to drop the users table."""
     op.drop_table("users")

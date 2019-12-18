@@ -1,12 +1,12 @@
+"""Set up the Alembic environment."""
+
 from logging.config import fileConfig
 
+import yaml
+from alembic import context
+from attrdict import AttrDict
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
-
-from alembic import context
-
-import yaml
-from attrdict import AttrDict
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -19,7 +19,7 @@ with open("config.yaml") as c:
 
 url = "postgresql://{}:{}@{}:{}/{}"
 url = url.format(CONFIG.db.username, CONFIG.db.password,
-           CONFIG.db.host, CONFIG.db.port, CONFIG.db.database)
+                 CONFIG.db.host, CONFIG.db.port, CONFIG.db.database)
 
 config.set_main_option('sqlalchemy.url', url)
 
@@ -39,7 +39,7 @@ target_metadata = None
 # ... etc.
 
 
-def run_migrations_offline():
+def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
 
     This configures the context with just a URL
@@ -63,7 +63,7 @@ def run_migrations_offline():
         context.run_migrations()
 
 
-def run_migrations_online():
+def run_migrations_online() -> None:
     """Run migrations in 'online' mode.
 
     In this scenario we need to create an Engine
