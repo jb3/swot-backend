@@ -4,3 +4,11 @@ host:
 
 flask:
   SECRET_KEY: "abcdef"
+
+db:
+  host: "127.0.0.1"
+  port: 5432
+
+  username: "swot"
+  password: "abcdef"
+  database: "swot"

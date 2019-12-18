@@ -6,6 +6,7 @@ import inspect
 from flask import Blueprint, Flask, Response
 
 from .config import CONFIG
+from .database import connect
 from .mappings import MAPPINGS
 from .route import Route
 
@@ -20,6 +21,8 @@ class RouteManager:
         self.app.config.from_object(dict(CONFIG.flask))
 
         self.app.after_request(self.after_request)
+
+        self.db = connect()
 
         self.load_routes()
 
