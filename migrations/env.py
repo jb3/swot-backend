@@ -1,12 +1,15 @@
 """Set up the Alembic environment."""
 
 from logging.config import fileConfig
+import sys
 
 import yaml
 from alembic import context
 from attrdict import AttrDict
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
+
+sys.path.append(".")
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -26,12 +29,10 @@ config.set_main_option('sqlalchemy.url', url)
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
 fileConfig(config.config_file_name)
-
-# add your model's MetaData object here
 # for 'autogenerate' support
-# from myapp import mymodel
+from backend import models
 # target_metadata = mymodel.Base.metadata
-target_metadata = None
+target_metadata = models.Base.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
