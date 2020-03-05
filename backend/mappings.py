@@ -5,4 +5,6 @@ The name of the blueprint must line up with the name of the directory within
 the routes directory.
 """
 
-MAPPINGS = {"users": "/users"}
+MAPPINGS = {
+  "users": "/users"
+}
