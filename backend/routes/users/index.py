@@ -1,9 +1,10 @@
 """Index page for the User API."""
-from backend.database import Session
-from backend.route import Route
-from backend.models import User
-
 from flask import jsonify
+
+from backend.database import Session
+from backend.models import User
+from backend.route import Route
+
 
 class UserIndex(Route):
     """Index class for the User API."""

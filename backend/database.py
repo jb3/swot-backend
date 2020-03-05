@@ -21,4 +21,5 @@ def connect() -> (sqlalchemy.engine.Engine, sqlalchemy.MetaData):
 
     return con, meta
 
+
 Session = sessionmaker(bind=connect()[0])
