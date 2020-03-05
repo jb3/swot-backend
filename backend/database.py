@@ -1,5 +1,6 @@
 """Utility functions for the database."""
 import sqlalchemy
+from sqlalchemy.orm import sessionmaker
 
 from backend.config import CONFIG
 
@@ -19,3 +20,6 @@ def connect() -> (sqlalchemy.engine.Engine, sqlalchemy.MetaData):
     meta = sqlalchemy.MetaData(bind=con, reflect=True)
 
     return con, meta
+
+
+Session = sessionmaker(bind=connect()[0])

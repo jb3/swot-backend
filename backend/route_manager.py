@@ -28,7 +28,11 @@ class RouteManager:
 
     def run(self: "RouteManager") -> None:
         """Start the flask application."""
-        self.app.run()
+        self.app.run(
+            host=CONFIG.host.host,
+            port=CONFIG.host.port,
+            debug=CONFIG.host.debug
+        )
 
     @staticmethod
     def after_request(response: Response) -> Response:
