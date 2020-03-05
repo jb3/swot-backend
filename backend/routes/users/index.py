@@ -12,7 +12,8 @@ class UserIndex(Route):
     name = "index"
     path = "/"
 
-    def get(self: "UserIndex") -> str:
+    @staticmethod
+    def get() -> str:
         """GET request to the User index."""
         sess = Session()
 

@@ -17,11 +17,13 @@ class UserCreate(Route):
     name = "create"
     path = "/create"
 
-    def get(self: "UserCreate") -> Response:
+    @staticmethod
+    def get() -> Response:
         """Render a template to display a form to create users."""
         return render_template("users/create.html")
 
-    def post(self: "UserCreate") -> Response:
+    @staticmethod
+    def post() -> Response:
         """Use post data to create a new user."""
         # Validations
         required_fields = [
