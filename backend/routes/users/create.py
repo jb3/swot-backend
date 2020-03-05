@@ -49,7 +49,7 @@ class UserCreate(Route):
         data = request.form.copy()
         g_recaptcha = data.pop("g-recaptcha")
 
-        # NOTE: This must specify a local certificate when making requests to deal with
+        # NOTE: This must specify a local certificate because of
         # the self signed certificate used by the web filter at Malton School.
         recaptcha_response = httpx.post(
             "https://www.google.com/recaptcha/api/siteverify",
