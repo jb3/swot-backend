@@ -3,3 +3,5 @@ pyyaml
 attrdict
 sqlalchemy
 psycopg2
+parse
+httpx
