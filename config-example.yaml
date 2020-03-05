@@ -2,6 +2,9 @@ host:
   host: "127.0.0.1"
   port: 4000
 
+recaptcha:
+  key: "ABC"
+
 flask:
   SECRET_KEY: "abcdef"
 

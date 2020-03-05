@@ -105,3 +105,6 @@ venv.bak/
 
 # Config file
 config.yaml
+
+# PEM certificates
+*.pem

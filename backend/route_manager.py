@@ -16,7 +16,7 @@ class RouteManager:
 
     def __init__(self: "RouteManager") -> None:
         """Initialise a new route manager and with it a flask application."""
-        self.app = Flask(__name__)
+        self.app = Flask(__name__, root_path="backend/")
 
         self.app.config.from_object(dict(CONFIG.flask))
 
@@ -31,14 +31,14 @@ class RouteManager:
         self.app.run(
             host=CONFIG.host.host,
             port=CONFIG.host.port,
-            debug=CONFIG.host.debug
+            debug=CONFIG.host.debug,
         )
 
     @staticmethod
     def after_request(response: Response) -> Response:
         """Process a response before it is sent to the client."""
-        if "text/html" in response.headers["Content-Type"]:
-            response.headers["Content-Type"] = "text/plain"
+        # if "text/html" in response.headers["Content-Type"]:
+        #    response.headers["Content-Type"] = "text/plain"
 
         return response
 
@@ -53,10 +53,11 @@ class RouteManager:
                 module = importlib.import_module(imp)
 
                 for _, member in inspect.getmembers(module):
-                    if (inspect.isclass(member)
+                    if (
+                        inspect.isclass(member)
                         and Route in member.__mro__
                         and member is not Route
-                        ):  # noqa
+                    ):  # noqa
                         member.setup(self, bp)
 
             self.app.register_blueprint(bp, url_prefix=path)

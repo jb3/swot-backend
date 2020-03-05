@@ -1,0 +1,18 @@
+<script src="https://www.google.com/recaptcha/api.js?render=6LcY6d4UAAAAABMsK_j7Iucn2xyOj6lY8LfTsTqW"></script>
+<script>
+grecaptcha.ready(function() {
+    grecaptcha.execute('6LcY6d4UAAAAABMsK_j7Iucn2xyOj6lY8LfTsTqW', {action: 'create'}).then(function(token) {
+       setToken(token);
+    });
+    
+    setInterval(() => {
+        grecaptcha.execute('6LcY6d4UAAAAABMsK_j7Iucn2xyOj6lY8LfTsTqW', {action: 'create'}).then(function(token) {
+           setToken(token);
+        });
+    }, 1000 * 60 * 1.5)
+});
+
+function setToken(token) {
+    document.getElementById("g-recaptcha").value = token;
+}
+</script>
