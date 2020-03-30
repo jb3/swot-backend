@@ -1,7 +1,7 @@
 """Entry point for Swot application."""
 
-from backend.route_manager import RouteManager
 from backend.config import CONFIG
+from backend.route_manager import RouteManager
 
 manager = RouteManager()
 
