@@ -59,8 +59,7 @@ class UserCreate(Route):
                 "secret": CONFIG.recaptcha.key,
                 "response": g_recaptcha,
                 "remoteip": request.remote_addr,
-            },
-            verify="Malton School HTTPS.pem",
+            }
         ).json()
 
         if not recaptcha_response["success"]:

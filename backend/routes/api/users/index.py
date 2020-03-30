@@ -1,5 +1,5 @@
 """Index page for the User API."""
-from flask import jsonify
+from flask import jsonify, url_for
 
 from backend.database import Session
 from backend.models import User
@@ -22,6 +22,7 @@ class UserIndex(Route):
         for instance in sess.query(User).order_by(User.id):
             d = instance.__dict__
             d.pop("_sa_instance_state")
+            d["goto"] = url_for("api.users.create")
             data.append(d)
 
         return jsonify(data)

@@ -2,6 +2,7 @@
 import glob
 import importlib
 import inspect
+import typing
 
 from flask import Blueprint, Flask, Response
 
@@ -42,12 +43,24 @@ class RouteManager:
 
         return response
 
-    def load_routes(self: "RouteManager") -> None:
-        """Load the routes from the route directories."""
-        for bp_name, path in MAPPINGS.items():
-            bp = Blueprint(bp_name, bp_name)
+    def load_from_key_or_recurse(
+        self: "RouteManager",
+        namespace: str,
+        bp_name: str,
+        data: typing.Union[dict, str]
+    ) -> None:
+        """
+        Load a mapping file or recurse into a directory.
 
-            for file in glob.glob(f"backend/routes/{bp_name}/*.py"):
+        The mapping file may specify an area as either a string for the route
+        or a dictionary which should be recursed into. This function either
+        loads the blueprint or steps down into the dictionary.
+        """
+        if isinstance(data, str):
+            bp = Blueprint(bp_name, __name__)
+
+            for file in glob.glob(f"backend/routes/{namespace}{data}/*.py"):
+                print(file)
                 imp = file[:-3].replace("/", ".")
 
                 module = importlib.import_module(imp)
@@ -60,4 +73,20 @@ class RouteManager:
                     ):  # noqa
                         member.setup(self, bp)
 
-            self.app.register_blueprint(bp, url_prefix=path)
+            self.app.register_blueprint(
+                bp,
+                url_prefix="/" + bp_name.replace(".", "/")
+            )
+        else:
+            for key, val in data.items():
+                print(key, val)
+                self.load_from_key_or_recurse(
+                    f"{namespace}{bp_name}/",
+                    f"{bp_name}.{key.replace('/', '')}",
+                    val
+                )
+
+    def load_routes(self: "RouteManager") -> None:
+        """Load the routes from the route directories."""
+        for bp_name, path in MAPPINGS.items():
+            self.load_from_key_or_recurse("", bp_name, path)
