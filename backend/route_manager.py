@@ -48,16 +48,16 @@ class RouteManager:
         namespace: str,
         bp_name: str,
         data: typing.Union[dict, str]
-    ):
+    ) -> None:
         """
+        Load a mapping file or recurse into a directory.
+
         The mapping file may specify an area as either a string for the route
         or a dictionary which should be recursed into. This function either
         loads the blueprint or steps down into the dictionary.
         """
         if isinstance(data, str):
             bp = Blueprint(bp_name, __name__)
-
-            print(f"{namespace}{data}")
 
             for file in glob.glob(f"backend/routes/{namespace}{data}/*.py"):
                 print(file)
@@ -73,7 +73,10 @@ class RouteManager:
                     ):  # noqa
                         member.setup(self, bp)
 
-            self.app.register_blueprint(bp, url_prefix="/" + bp_name.replace(".", "/"))
+            self.app.register_blueprint(
+                bp,
+                url_prefix="/" + bp_name.replace(".", "/")
+            )
         else:
             for key, val in data.items():
                 print(key, val)
