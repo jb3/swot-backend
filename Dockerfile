@@ -9,4 +9,4 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-CMD ["python", "-m", "gunicorn", "--workers", "2", "app:app", "--access-logfile", "-"]
+CMD ["gunicorn", "--workers", "2", "app:app", "--access-logfile", "-"]
