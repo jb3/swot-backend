@@ -6,3 +6,4 @@ psycopg2
 parse
 httpx
 gunicorn
+alembic
