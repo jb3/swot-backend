@@ -10,12 +10,11 @@ if CONFIG.host.migrate_on_startup:
     from alembic.config import Config
     import os
 
-    migrations_dir = os.path.dirname(os.path.realpath(__file__))
+    config_dir = os.path.dirname(os.path.realpath(__file__))
 
-    config_file = os.path.join(migrations_dir, "alembic.ini")
+    config_file = os.path.join(config_dir, "alembic.ini")
 
     config = Config(file_=config_file)
-    config.set_main_option("script_location", migrations_dir)
 
     upgrade(config, "head")
 
