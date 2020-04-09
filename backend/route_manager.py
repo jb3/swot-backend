@@ -60,7 +60,6 @@ class RouteManager:
             bp = Blueprint(bp_name, __name__)
 
             for file in glob.glob(f"backend/routes/{namespace}{data}/*.py"):
-                print(file)
                 imp = file[:-3].replace("/", ".")
 
                 module = importlib.import_module(imp)

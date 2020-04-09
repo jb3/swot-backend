@@ -1,6 +1,7 @@
 host:
   host: "127.0.0.1"
   port: 4000
+  migrate_on_startup: false
 
 recaptcha:
   key: "ABC"
