@@ -19,7 +19,7 @@ if CONFIG.host.migrate_on_startup:
     upgrade(config, "head")
 
 if __name__ == "__main__":
-    if CONFIG.host.DEBUG:
+    if CONFIG.host.debug:
         manager.run()
 
 app = manager.app

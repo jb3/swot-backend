@@ -7,7 +7,8 @@ the routes directory.
 
 MAPPINGS = {
   "api": {
-    "users": "users"
+    "users": "users",
+    "/": "index"
   },
   "/": "pages"
 }

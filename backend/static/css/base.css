@@ -1,0 +1,51 @@
+body {
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+}
+
+#landing-hero {
+    font-size: 10em;
+    color: white;
+    position: absolute;
+    right: 50px;
+}
+
+body {
+    margin: 0;
+}
+
+.container {
+    padding: 40px;
+}
+
+#navbar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: white;
+}
+
+.nav-item {
+  float: left;
+}
+
+.nav-item a {
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+.nav-item a:hover {
+  background-color: #f0f0f0;
+}
+
+.nav-left {
+    float: left;
+}
+
+.nav-right {
+    float: right;
+}

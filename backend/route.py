@@ -13,9 +13,8 @@ class Route(MethodView):
     @classmethod
     def setup(
         cls: "Route",
-        manager: "backend.route_manager.RouteManager",
         blueprint: Blueprint,
-    ) -> "Route":
+    ):
         """Register the view with the blueprint."""
         if not cls.path or not cls.name:
             raise RuntimeError("Routes have name and path defined")
@@ -24,3 +23,5 @@ class Route(MethodView):
 
         cls.blueprint = blueprint.name
         cls.name = f"{blueprint.name}.{cls.name}"
+
+        return cls
