@@ -1,4 +1,6 @@
 """Index page for the User API."""
+from flask import render_template
+
 from backend.route import Route
 
 
@@ -11,4 +13,4 @@ class PageIndex(Route):
     @staticmethod
     def get() -> str:
         """GET request to the Page index."""
-        return "Hello world!"
+        return render_template("pages/index.html")

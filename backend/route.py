@@ -13,7 +13,6 @@ class Route(MethodView):
     @classmethod
     def setup(
         cls: "Route",
-        manager: "backend.route_manager.RouteManager",
         blueprint: Blueprint,
     ) -> "Route":
         """Register the view with the blueprint."""
@@ -24,3 +23,5 @@ class Route(MethodView):
 
         cls.blueprint = blueprint.name
         cls.name = f"{blueprint.name}.{cls.name}"
+
+        return cls

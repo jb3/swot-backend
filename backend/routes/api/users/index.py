@@ -22,6 +22,7 @@ class UserIndex(Route):
         for instance in sess.query(User).order_by(User.id):
             d = instance.__dict__
             d.pop("_sa_instance_state")
+            d.pop("password")
             d["goto"] = url_for("api.users.create")
             data.append(d)
 

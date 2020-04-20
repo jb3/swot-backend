@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %} • Swot</title>
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/base.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Revision done right">
+    <meta name="keywords" content="Study,Revise,School,Teacher,Student">
+    <meta name="author" content="Swot">
+    {% block head_extra %}{% endblock %}
+</head>
+<body>
+    {% include 'pages/navbar.html' %}
+
+    {% block content %}
+
+    {%  endblock %}
+</body>
+</html>

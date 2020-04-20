@@ -3,6 +3,7 @@ import glob
 import importlib
 import inspect
 import typing
+from pathlib import Path
 
 from flask import Blueprint, Flask, Response
 
@@ -18,6 +19,8 @@ class RouteManager:
     def __init__(self: "RouteManager") -> None:
         """Initialise a new route manager and with it a flask application."""
         self.app = Flask(__name__, root_path="backend/")
+
+        self.app._static_folder = str(Path.cwd() / "backend" / "static")
 
         self.app.config.from_object(dict(CONFIG.flask))
 
@@ -57,8 +60,12 @@ class RouteManager:
         loads the blueprint or steps down into the dictionary.
         """
         if isinstance(data, str):
-            bp = Blueprint(bp_name, __name__)
+            if namespace != "":
+                name = bp_name
+            else:
+                name = data
 
+            bp = Blueprint(name, __name__)
             for file in glob.glob(f"backend/routes/{namespace}{data}/*.py"):
                 imp = file[:-3].replace("/", ".")
 
@@ -70,7 +77,7 @@ class RouteManager:
                         and Route in member.__mro__
                         and member is not Route
                     ):  # noqa
-                        member.setup(self, bp)
+                        member.setup(bp)
 
             self.app.register_blueprint(
                 bp,
@@ -78,7 +85,6 @@ class RouteManager:
             )
         else:
             for key, val in data.items():
-                print(key, val)
                 self.load_from_key_or_recurse(
                     f"{namespace}{bp_name}/",
                     f"{bp_name}.{key.replace('/', '')}",
