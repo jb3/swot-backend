@@ -14,7 +14,7 @@ class Route(MethodView):
     def setup(
         cls: "Route",
         blueprint: Blueprint,
-    ):
+    ) -> "Route":
         """Register the view with the blueprint."""
         if not cls.path or not cls.name:
             raise RuntimeError("Routes have name and path defined")

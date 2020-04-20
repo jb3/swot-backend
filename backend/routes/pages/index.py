@@ -10,6 +10,7 @@ class PageIndex(Route):
     name = "index"
     path = "/"
 
-    def get(self) -> str:
+    @staticmethod
+    def get() -> str:
         """GET request to the Page index."""
         return render_template("pages/index.html")

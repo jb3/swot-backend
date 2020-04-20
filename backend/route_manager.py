@@ -18,7 +18,7 @@ class RouteManager:
 
     def __init__(self: "RouteManager") -> None:
         """Initialise a new route manager and with it a flask application."""
-        self.app = Flask(__name__, root_path="backend/", static_url_path="/static")
+        self.app = Flask(__name__, root_path="backend/")
 
         self.app._static_folder = str(Path.cwd() / "backend" / "static")
 
