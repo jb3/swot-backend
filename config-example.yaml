@@ -11,6 +11,9 @@ flask:
   SECRET_KEY: "abcdef"
 
 db:
+  use_sqlite: false
+
+  # Only relevant if use_sqlite is false.
   host: "127.0.0.1"
   port: 5432
 

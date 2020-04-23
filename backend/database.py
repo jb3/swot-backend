@@ -11,14 +11,17 @@ def connect() -> (sqlalchemy.engine.Engine, sqlalchemy.MetaData):
 
     Required parameters for connection are specified within the config file.
     """
-    url = "postgresql://{}:{}@{}:{}/{}"
-    url = url.format(
-        CONFIG.db.username,
-        CONFIG.db.password,
-        CONFIG.db.host,
-        CONFIG.db.port,
-        CONFIG.db.database,
-    )
+    if not CONFIG.db.use_sqlite:
+        url = "postgresql://{}:{}@{}:{}/{}"
+        url = url.format(
+            CONFIG.db.username,
+            CONFIG.db.password,
+            CONFIG.db.host,
+            CONFIG.db.port,
+            CONFIG.db.database,
+        )
+    else:
+        url = "sqlite:///swot.db"
 
     con = sqlalchemy.create_engine(url, client_encoding="utf-8")
 

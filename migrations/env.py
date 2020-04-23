@@ -20,9 +20,12 @@ with open("config.yaml") as c:
 
     CONFIG = AttrDict(conf)
 
-url = "postgresql://{}:{}@{}:{}/{}"
-url = url.format(CONFIG.db.username, CONFIG.db.password,
-                 CONFIG.db.host, CONFIG.db.port, CONFIG.db.database)
+if not CONFIG.db.use_sqlite:
+    url = "postgresql://{}:{}@{}:{}/{}"
+    url = url.format(CONFIG.db.username, CONFIG.db.password,
+                     CONFIG.db.host, CONFIG.db.port, CONFIG.db.database)
+else:
+    url = "sqlite:///swot.db"
 
 config.set_main_option('sqlalchemy.url', url)
 
