@@ -111,3 +111,6 @@ config.yaml
 
 # PyCharm Config
 .idea/
+
+# Swot SQLite Database
+swot.db
