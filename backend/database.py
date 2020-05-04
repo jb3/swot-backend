@@ -11,6 +11,7 @@ def connect() -> (sqlalchemy.engine.Engine, sqlalchemy.MetaData):
 
     Required parameters for connection are specified within the config file.
     """
+    # When we use SQLite we don't need any of the PostgreSQL parameters
     if not CONFIG.db.use_sqlite:
         url = "postgresql://{}:{}@{}:{}/{}"
         url = url.format(
@@ -21,10 +22,12 @@ def connect() -> (sqlalchemy.engine.Engine, sqlalchemy.MetaData):
             CONFIG.db.database,
         )
 
+        # Create a connection to PostgreSQL
         con = sqlalchemy.create_engine(url, client_encoding="utf-8")
     else:
         url = "sqlite:///swot.db"
 
+        # Create a connection to SQLite
         con = sqlalchemy.create_engine(url)
 
     meta = sqlalchemy.MetaData(bind=con, reflect=True)
@@ -32,4 +35,5 @@ def connect() -> (sqlalchemy.engine.Engine, sqlalchemy.MetaData):
     return con, meta
 
 
+# Create a class which will allow for reuse of the database connection
 Session = sessionmaker(bind=connect()[0])
