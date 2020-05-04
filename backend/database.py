@@ -20,10 +20,12 @@ def connect() -> (sqlalchemy.engine.Engine, sqlalchemy.MetaData):
             CONFIG.db.port,
             CONFIG.db.database,
         )
+
+        con = sqlalchemy.create_engine(url, client_encoding="utf-8")
     else:
         url = "sqlite:///swot.db"
 
-    con = sqlalchemy.create_engine(url, client_encoding="utf-8")
+        con = sqlalchemy.create_engine(url)
 
     meta = sqlalchemy.MetaData(bind=con, reflect=True)
 
