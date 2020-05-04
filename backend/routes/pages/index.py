@@ -13,4 +13,4 @@ class PageIndex(Route):
     @staticmethod
     def get() -> str:
         """GET request to the Page index."""
-        return render_template("pages/index.html")
+        return render_template("pages/index.html")  # Render the index template
