@@ -114,3 +114,6 @@ config.yaml
 
 # Swot SQLite Database
 swot.db
+
+# Test results
+tests.html

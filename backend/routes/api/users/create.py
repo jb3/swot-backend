@@ -56,8 +56,6 @@ class UserCreate(Route):
         # Remove and save the google recaptcha score
         g_recaptcha = data.pop("g-recaptcha")
 
-        # NOTE: This must specify a local certificate because of
-        # the self signed certificate used by the web filter at Malton School.
         recaptcha_response = httpx.post(
             # Request to Google to get the recaptcha score for the request
             "https://www.google.com/recaptcha/api/siteverify",
