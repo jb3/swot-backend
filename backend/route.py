@@ -22,6 +22,6 @@ class Route(MethodView):
         blueprint.add_url_rule(cls.path, view_func=cls.as_view(cls.name))
 
         cls.blueprint = blueprint.name
-        cls.name = f"{blueprint.name}.{cls.name}"
+        cls.name = f"{blueprint.name}-{cls.name}"
 
         return cls
