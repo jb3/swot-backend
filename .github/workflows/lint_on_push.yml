@@ -24,7 +24,7 @@ jobs:
       run: |
         flake8 . --count --statistics
 
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
