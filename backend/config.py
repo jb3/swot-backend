@@ -1,12 +1,22 @@
 """Configuration system for Swot Backend."""
+from pathlib import Path
+
 import yaml
 from attrdict import AttrDict
 
 
 def get_config() -> AttrDict:
     """Fetch the configuration from the YAML file."""
-    # Open the config.yaml file
-    with open("config.yaml") as config:
+    if Path("config.yaml").exists():
+        config_path = "config.yaml"
+    else:
+        print("WARNING: No config set, defaulting to config-exampl.yaml")
+        print("WARNING: To get rid of this warning, copy config-example.yaml")
+        print("WARNING: to a new file called config.yaml and edit")
+        config_path = "config-example.yaml"
+
+    # Open the config file
+    with open(config_path) as config:
         # Parse the YAML to a python dictionary
         conf = yaml.safe_load(config)
 
