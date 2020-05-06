@@ -8,15 +8,19 @@ from backend.route import Route
 
 class FakeRoute(Route):
     """A fake route used for testing."""
+
     name = "fake_route"
     path = "/"
 
     @staticmethod
     def get() -> None:
+        """Get request to the route."""
         return "Hello, world!"
 
+
 class BrokenRoute(Route):
-    """A broken route with no name or class set"""
+    """A broken route with no name or path set."""
+
     pass
 
 
@@ -30,6 +34,7 @@ def create_blueprint() -> Blueprint:
 
 @pytest.fixture(scope="module")
 def app() -> Flask:
+    """Create a flask app and register the fake route."""
     app = Flask(__name__)
     app.register_blueprint(create_blueprint())
 
@@ -38,6 +43,7 @@ def app() -> Flask:
 
 @pytest.fixture(scope="module")
 def client() -> Flask:
+    """Create a client for querying flask to emulate a HTTP client."""
     app = Flask(__name__)
     app.register_blueprint(create_blueprint())
 
@@ -45,7 +51,7 @@ def client() -> Flask:
         yield client
 
 
-def test_registered(app: Flask):
+def test_registered(app: Flask) -> None:
     """Confirm that a route was registered at the home page."""
     for rule in app.url_map.iter_rules():
         assert "GET" in rule.methods
@@ -54,13 +60,13 @@ def test_registered(app: Flask):
         break
 
 
-def test_get_route(client: testing.FlaskClient):
+def test_get_route(client: testing.FlaskClient) -> None:
     """Confirm that a route can be called."""
     resp = client.get("/")
     assert b"Hello, world!" in resp.data
 
 
-def test_error_raised_for_invalid_params():
+def test_error_raised_for_invalid_params() -> None:
     """Confirm that when no name or path is given a RuntimeError is raised."""
     bp = Blueprint("home", __name__)
 
