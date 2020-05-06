@@ -21,8 +21,6 @@ class FakeRoute(Route):
 class BrokenRoute(Route):
     """A broken route with no name or path set."""
 
-    pass
-
 
 def create_blueprint() -> Blueprint:
     """Create a blueprint for use in tests."""
