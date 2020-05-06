@@ -5,6 +5,7 @@ from flask import Response
 
 from backend.route_manager import RouteManager
 
+
 @pytest.fixture(scope="module")
 def route_manager() -> RouteManager:
     """Create a dummy route manager."""

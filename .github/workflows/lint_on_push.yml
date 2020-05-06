@@ -1,10 +1,9 @@
-name: Lint on push
+name: Test on push
 
 on: [push]
 
 jobs:
-  build:
-
+  lint:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,3 +23,35 @@ jobs:
     - name: Lint with flake8
       run: |
         flake8 . --count --statistics
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
+    - name: Install system dependencies
+      run: |
+        sudo apt-get install libpq-dev python-dev
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install -r requirements-ci.txt
+    - name: Run pytest with coverage
+      run: python -m pytest --cov=backend tests/ --html tests.html --self-contained-html
+    - name: Run coverage to generate HTML coverage report
+      run: python -m coverage html
+    - name: Upload tests to GitHub Actions
+      uses: actions/upload-artifact@v2
+      with:
+        name: tests
+        path: tests.html
+    - name: Upload coverage to GitHub Actions
+      uses: actions/upload-artifact@v2
+      with:
+        name: coverage
+        path: htmlcov/

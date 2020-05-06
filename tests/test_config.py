@@ -10,6 +10,7 @@ def test_get_config() -> None:
     config = get_config()
     assert isinstance(config, AttrDict)
 
+
 def test_global_config() -> None:
     """Test the global CONFIG instance is okay."""
     assert isinstance(CONFIG, AttrDict)
