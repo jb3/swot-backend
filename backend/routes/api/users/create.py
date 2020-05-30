@@ -86,7 +86,10 @@ class UserCreate(Route):
 
         if data.pop("password_confirm") != data["password"]:
             return (
-                jsonify({"status": "error", "field": ["password", "does not match"]}),
+                jsonify({
+                    "status": "error",
+                    "field": ["password", "does not match"]
+                }),
                 400,
             )
 

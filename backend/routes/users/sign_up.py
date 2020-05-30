@@ -13,4 +13,5 @@ class UserSignUp(Route):
     @staticmethod
     def get() -> str:
         """GET request to the Page index."""
-        return render_template("users/create.html")  # Render the creation template
+        # Render the user creation page
+        return render_template("users/create.html")
