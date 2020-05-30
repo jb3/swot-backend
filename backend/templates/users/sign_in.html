@@ -13,7 +13,6 @@
 
       <div class="container user-form">
         <form id="form" method="POST" action="{{ url_for('users.sign_in') }}">
-          {{ errors }}
           {% if errors["email"] %}
             <span class="error">{{ errors["email"] }}</span>
           {% endif %}
