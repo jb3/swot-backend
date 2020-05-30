@@ -6,6 +6,7 @@ from flask import testing
 
 from app import manager
 
+
 @pytest.fixture(scope="module")
 def client() -> testing.FlaskClient:
     """Create a client for querying flask to emulate a HTTP client."""
@@ -13,7 +14,7 @@ def client() -> testing.FlaskClient:
         yield client
 
 
-def test_api_user_index(client: testing.FlaskClient):
+def test_api_user_index(client: testing.FlaskClient) -> None:
     """Test the route to render the API user index."""
     resp = client.get("/api/users/")
     data = json.loads(resp.data)
@@ -23,14 +24,7 @@ def test_api_user_index(client: testing.FlaskClient):
     if len(data) > 0:
         user = data[0]
 
-        keys = [
-            "email",
-            "full_name",
-            "goto",
-            "id",
-            "type",
-            "username"
-        ]
+        keys = ["email", "full_name", "goto", "id", "type", "username"]
 
         for key in keys:
             assert user.get(key) is not None

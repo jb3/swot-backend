@@ -1,9 +1,9 @@
 """Test the swot index route."""
 import pytest
-
 from flask import testing
 
 from app import manager
+
 
 @pytest.fixture(scope="module")
 def client() -> testing.FlaskClient:
@@ -12,7 +12,7 @@ def client() -> testing.FlaskClient:
         yield client
 
 
-def test_pages_index(client: testing.FlaskClient):
+def test_pages_index(client: testing.FlaskClient) -> None:
     """Test the route to render the home page for Swot."""
     resp = client.get("/")
     assert "Home • Swot".encode() in resp.data

@@ -6,6 +6,7 @@ from flask import testing
 
 from app import manager
 
+
 @pytest.fixture(scope="module")
 def client() -> testing.FlaskClient:
     """Create a client for querying flask to emulate a HTTP client."""
@@ -13,7 +14,7 @@ def client() -> testing.FlaskClient:
         yield client
 
 
-def test_api_index(client: testing.FlaskClient):
+def test_api_index(client: testing.FlaskClient) -> None:
     """Test the route to render the API index."""
     resp = client.get("/api/")
     data = json.loads(resp.data)

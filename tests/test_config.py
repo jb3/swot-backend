@@ -17,6 +17,7 @@ def test_global_config() -> None:
     """Test the global CONFIG instance is okay."""
     assert isinstance(CONFIG, AttrDict)
 
+
 def test_missing_config() -> None:
     """Test that the expected behaviour occurs when config is missing."""
     new_config_file = Path("config.yaml").rename("../config.yaml")
