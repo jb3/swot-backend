@@ -28,10 +28,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: whoan/docker-build-with-cache-action@v4
+      - name: Build and publish Docker image
+        uses: mattdavis0351/actions/docker-gpr@v1
         with:
-          username: "${{ github.actor }}"
-          password: "${{ secrets.GITHUB_TOKEN }}"
-          image_name: j03b/swot-backend/swot
-          image_tag: latest
-          registry: docker.pkg.github.com
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          image-name: swot
+          dockerfile-location: .
