@@ -1,6 +1,6 @@
 """A portal for managing information about the logged in user."""
 
-from flask import g, Response, render_template, session
+from flask import g, render_template, Response
 
 from backend.route import Route
 from backend.utils import authenticated
