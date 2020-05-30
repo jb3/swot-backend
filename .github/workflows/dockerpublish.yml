@@ -29,7 +29,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build Docker image
-        run: docker build . --file Dockerfile --t j03b/swot-backend/swot:latest
+        run: docker build . --file Dockerfile -t j03b/swot-backend/swot:latest
 
       - name: Publish Docker
         uses: elgohr/Publish-Docker-Github-Action@master
