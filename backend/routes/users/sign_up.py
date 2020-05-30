@@ -100,12 +100,12 @@ class UserSignUp(Route):
 
         if not recaptcha_response["success"]:
             # Recaptcha returned us an error and cannot evaluate the request
-            # Set error in email since it is top field
-            errors["email"] = "ReCAPTCHA did not complete"
+            # Set error in full_name since it is top field
+            errors["full_name"] = "ReCAPTCHA did not complete"
         else:
             if recaptcha_response["score"] < 0.5:
                 # Scores under 0.5 are likely automated and should be blocked
-                errors["email"] = "ReCAPTCHA failed"
+                errors["full_name"] = "ReCAPTCHA failed"
 
         if data.pop("password_confirm") != data["password"]:
             errors["password_confirm"] = "Does not match password"
@@ -133,6 +133,8 @@ class UserSignUp(Route):
                 if user is None:
                     data["username"] += str(acc)
                     break
+
+        data.pop("_csrf_token")
 
         # Create a new user with the provided data
         new_user = User(**data)
