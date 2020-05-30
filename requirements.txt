@@ -7,3 +7,4 @@ parse
 httpx
 gunicorn
 alembic
+argon2-cffi

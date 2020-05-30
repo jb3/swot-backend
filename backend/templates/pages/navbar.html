@@ -12,6 +12,8 @@
         </a>
     </li>
 
+    {% if not session["uid"] %}
+
     <li class="nav-item nav-right">
         <a class="no-decoration" href="{{ url_for("users.sign_up") }}">
             <p class="nav-brand">Sign up</p>
@@ -19,8 +21,15 @@
     </li>
 
     <li class="nav-item nav-right">
-        <a class="no-decoration" href="{{ url_for("pages.index") }}">
+        <a class="no-decoration" href="{{ url_for("users.sign_in") }}">
             <p class="nav-brand">Sign in</p>
         </a>
     </li>
+    {% else %}
+    <li class="nav-item nav-right">
+        <a class="no-decoration" href="{{ url_for("pages.index") }}">
+            <p class="nav-brand">Logged in as {{ user.full_name }}</p>
+        </a>
+    </li>
+    {% endif %}
 </ul>

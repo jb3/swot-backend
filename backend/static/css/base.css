@@ -2,6 +2,30 @@ body {
     font-family: Roboto, Arial, Helvetica, sans-serif;
 }
 
+label {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
+  margin: 12px 0;
+  cursor: pointer;
+  position: relative;
+}
+
+.type-select {
+  align-self: center;
+  padding-right: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.error {
+  padding-left: 10px;
+  color: #f44336;
+  margin-bottom: 0px;
+  padding-bottom: 2px;
+}
+
 #landing-hero {
     font-size: 10em;
     color: white;
@@ -22,14 +46,14 @@ body {
 
 /* iPad Landscape */
 @media (max-width: 1024px) {
-  .sign-up-form {
+  .user-form {
     padding-top: 20% !important;
   }
 }
 
 .input-field {
   align-self: center;
-  margin-top: 2%;
+  margin-bottom: 2%;
   width: 95%;
   height: 2em;
   font-size: 1em;
@@ -51,14 +75,14 @@ body {
   font-weight: 10rem;
 }
 
-#sign-up-hero {
+#user-hero {
     font-size: 5em;
     color: white;
     left: 50px;
     margin-bottom: 0px;
 }
 
-#sign-up-sub {
+#user-sub {
     margin-top: 0px;
     font-size: 2.5em;
     color: white;
