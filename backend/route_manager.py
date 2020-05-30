@@ -108,7 +108,7 @@ class RouteManager:
             for key, val in data.items():
                 self.load_from_key_or_recurse(
                     f"{namespace}{bp_name}/",
-                    f"{bp_name}.{key.replace('/', '')}",
+                    f"{bp_name}/{key.replace('/', '')}",
                     val
                 )
 

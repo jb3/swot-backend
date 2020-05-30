@@ -32,7 +32,7 @@ class UserIndex(Route):
             d.pop("password")
 
             # Add a goto key to link to the user creation page
-            d["goto"] = url_for("api.users.create")
+            d["goto"] = url_for("api/users.create")
 
             # Add it to the temporary list
             data.append(d)

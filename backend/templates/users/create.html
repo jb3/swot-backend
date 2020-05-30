@@ -1,6 +1,6 @@
 {%  extends 'pages/base.html' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Sign up{% endblock %}
 
 {% block content %}
     <div class="html-mobile-background"></div>
@@ -11,7 +11,7 @@
       </div>
 
       <div class="container sign-up-form">
-        <form id="form" method="POST" action="{{ url_for('api.users.create') }}">
+        <form id="form" method="POST" action="{{ url_for('api/users.create') }}">
           <input name="full_name" type="text" class="input-field" placeholder="Full name"/>
           <input name="email" type="text" class="input-field" placeholder="Email"/>
           <input name="password" type="password" class="input-field" placeholder="Password"/>
