@@ -37,4 +37,4 @@ jobs:
           name: j03b/swot-backend/swot
           username: j03b
           password: ${{ secrets.GITHUB_TOKEN }}
-          name: docker.pkg.github.com
+          registry: docker.pkg.github.com
