@@ -20,9 +20,16 @@ def test_global_config() -> None:
 
 def test_missing_config() -> None:
     """Test that the expected behaviour occurs when config is missing."""
-    new_config_file = Path("config.yaml").rename("../config.yaml")
+    existing = False
+
+    if Path("config.yaml").exists():
+        existing = True
+        new_config_file = Path("config.yaml").rename("../config.yaml")
+    else:
+        Path("config-default.yaml").rename("config.yaml")
 
     config = get_config()
     assert isinstance(config, AttrDict)
 
-    new_config_file.rename("./config.yaml")
+    if existing:
+        new_config_file.rename("./config.yaml")
