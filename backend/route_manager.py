@@ -5,7 +5,7 @@ import inspect
 import typing
 from pathlib import Path
 
-from flask import session, Blueprint, Flask, Response
+from flask import Blueprint, Flask, Response, session
 
 from .config import CONFIG
 from .database import connect, Session

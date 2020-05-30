@@ -24,7 +24,7 @@ def test_api_user_index(client: testing.FlaskClient) -> None:
     if len(data) > 0:
         user = data[0]
 
-        keys = ["email", "full_name", "goto", "id", "type", "username"]
+        keys = ["email", "full_name", "id", "type", "username"]
 
         for key in keys:
             assert user.get(key) is not None

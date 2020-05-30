@@ -4,6 +4,7 @@ import parse
 from argon2 import PasswordHasher
 from flask import redirect, render_template, request, Response, session, url_for
 from sqlalchemy.exc import IntegrityError
+from werkzeug.datastructures import ImmutableMultiDict
 
 from backend.config import CONFIG
 from backend.database import Session
@@ -27,9 +28,8 @@ class UserSignUp(Route):
         return render_template("users/sign_up.html", errors={})
 
     @staticmethod
-    def post() -> Response:
-        """Use post data to create a new user."""
-        # Validations
+    def _validate_required(form: ImmutableMultiDict) -> list:
+        """Validate that the required fields for user sign up are present."""
         required_fields = [
             "email",
             "password",
@@ -39,12 +39,52 @@ class UserSignUp(Route):
             "g-recaptcha",
         ]
 
-        errors = {}
-
         for key in required_fields:
             # If the key is missing, return HTTP 400 Bad Request
             if not request.form.get(key) or request.form.get(key).isspace():
-                errors[key] = f"{key.replace('_', ' ').capitalize()} is not present"
+                yield key
+
+    @staticmethod
+    def _do_recaptcha(gr_resp: str) -> dict:
+        """Make a request to recaptcha."""
+        return httpx.post(
+            # Request to Google to get the recaptcha score for the request
+            "https://www.google.com/recaptcha/api/siteverify",
+            data={
+                # Secret site key for recaptcha
+                "secret": CONFIG.recaptcha.key,
+                # Response from recaptcha to the client
+                "response": gr_resp,
+                # IP of the connecting user
+                "remoteip": request.remote_addr,
+            },
+        ).json()
+
+    @staticmethod
+    def _get_unique_failure(arg: str) -> str:
+        """Find the failing unique constraint."""
+        constraint = parse.search(
+            'duplicate key value violates unique constraint "{}"', arg,
+        )
+
+        # Constraints are in the format of users_X_key where X is the violating
+        # unique constraint.
+        field = parse.search("users_{}_key", constraint[0])
+
+        return field[0]
+
+    @staticmethod
+    def _hash_password(passwd: str) -> str:
+        """Hash a password with Argon2."""
+        hasher = PasswordHasher()
+        return hasher.hash(passwd)
+
+    def post(self: "Route") -> Response:
+        """Use post data to create a new user."""
+        errors = {}
+
+        for key in self._validate_required(request.form):
+            errors[key] = f"{key.replace('_', ' ').capitalize()} is not present"
 
         if request.form.get("type") not in ["student", "teacher", "parent"]:
             # If the passed type is not of one in the above list, raise 400
@@ -56,18 +96,7 @@ class UserSignUp(Route):
         # Remove and save the google recaptcha score
         g_recaptcha = data.pop("g-recaptcha")
 
-        recaptcha_response = httpx.post(
-            # Request to Google to get the recaptcha score for the request
-            "https://www.google.com/recaptcha/api/siteverify",
-            data={
-                # Secret site key for recaptcha
-                "secret": CONFIG.recaptcha.key,
-                # Response from recaptcha to the client
-                "response": g_recaptcha,
-                # IP of the connecting user
-                "remoteip": request.remote_addr,
-            },
-        ).json()
+        recaptcha_response = self._do_recaptcha(g_recaptcha)
 
         if not recaptcha_response["success"]:
             # Recaptcha returned us an error and cannot evaluate the request
@@ -81,9 +110,7 @@ class UserSignUp(Route):
         if data.pop("password_confirm") != data["password"]:
             errors["password_confirm"] = "Does not match password"
 
-        hasher = PasswordHasher()
-
-        data["password"] = hasher.hash(data["password"])
+        data["password"] = self._hash_password(data["password"])
 
         data["username"] = data["full_name"].lower().replace(" ", "_")
 
@@ -107,19 +134,9 @@ class UserSignUp(Route):
             # with a constraint on the database (i.e. username, email)
             if "duplicate key value" in e.orig.args[0]:
                 # Parse the error to find the offending field
-                constraint = parse.search(
-                    'duplicate key value violates unique constraint "{}"',
-                    e.orig.args[0],
-                )
-                # Return an error telling the client what was wrong
+                field = self._get_field(e.orig.args[0])
 
-                # Constraints are in the format of users_X_key where X is the violating
-                # unique constraint.
-                field = parse.search("users_{}_key", constraint[0])
-
-                errors[
-                    field[0]
-                ] = f"{field[0].replace('_', ' ').capitalize()} already in use"
+                errors[field] = f"{field.replace('_', ' ').capitalize()} already in use"
 
         # If no errors were raised then the user creation succeeded
         if len(errors) == 0:
