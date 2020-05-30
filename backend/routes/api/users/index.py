@@ -1,5 +1,5 @@
 """Index page for the User API."""
-from flask import jsonify, url_for
+from flask import jsonify
 
 from backend.database import Session
 from backend.models import User

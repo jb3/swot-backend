@@ -88,5 +88,5 @@ class UserSignIn(Route):
         if len(errors) == 0:
             session["uid"] = user.id
             return redirect(url_for("pages.index"))
-        else:
-            return render_template("users/sign_in.html", errors=errors), 400
+
+        return render_template("users/sign_in.html", errors=errors), 400

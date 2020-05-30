@@ -142,5 +142,5 @@ class UserSignUp(Route):
         if len(errors) == 0:
             session["uid"] = new_user.id
             return redirect(url_for("pages.index"))
-        else:
-            return render_template("users/sign_up.html", errors=errors), 400
+
+        return render_template("users/sign_up.html", errors=errors), 400
