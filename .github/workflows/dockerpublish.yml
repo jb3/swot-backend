@@ -32,6 +32,6 @@ jobs:
         with:
           username: "${{ github.actor }}"
           password: "${{ secrets.GITHUB_TOKEN }}"
-          image_name: jos-b/swot-backend/swot
+          image_name: j03b/swot-backend/swot
           image_tag: latest
           registry: docker.pkg.github.com
