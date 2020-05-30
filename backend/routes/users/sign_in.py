@@ -87,6 +87,6 @@ class UserSignIn(Route):
         # If no errors were raised then the user creation succeeded
         if len(errors) == 0:
             session["uid"] = user.id
-            return redirect(url_for("pages.index"))
+            return redirect(url_for("users.user"))
 
         return render_template("users/sign_in.html", errors=errors), 400
