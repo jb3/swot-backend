@@ -9,8 +9,69 @@ body {
     right: 50px;
 }
 
+#form {
+  background-color: white;
+  right: 3em;
+  width: 40%;
+  position: absolute;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/* iPad Landscape */
+@media (max-width: 1024px) {
+  .sign-up-form {
+    padding-top: 20% !important;
+  }
+}
+
+.input-field {
+  align-self: center;
+  margin-top: 2%;
+  width: 95%;
+  height: 2em;
+  font-size: 1em;
+  border: none;
+  background-color: #F4F4F4;
+  padding-left: 10px;
+  color: #898989;
+}
+
+.input-confirm {
+  align-self: center;
+  margin-top: 2%;
+  width: 100%;
+  height: 2em;
+  font-size: 1em;
+  border: none;
+  background-color: black;
+  color: white;
+  font-weight: 10rem;
+}
+
+#sign-up-hero {
+    font-size: 5em;
+    color: white;
+    left: 50px;
+    margin-bottom: 0px;
+}
+
+#sign-up-sub {
+    margin-top: 0px;
+    font-size: 2.5em;
+    color: white;
+    left: 50px;
+}
+
 body {
     margin: 0;
+}
+
+.flex-container {
+  display: flex;
+  align-items: center;
 }
 
 .container {
@@ -35,6 +96,27 @@ body {
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
+}
+
+.html-mobile-background {
+    position: fixed;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 300%;
+    height: 100%; /* To compensate for mobile browser address bar space */
+    background: url(/static/img/home-background.jpg) no-repeat;
+    background-size: 100% 100%;
+}
+
+@media (min-width: 600px) {
+    html {
+        background: url(/static/img/home-background.jpg) no-repeat center center fixed;
+        background-size: cover;
+    }
+    .html-mobile-background {
+        display: none;
+    }
 }
 
 /* Change the link color to #111 (black) on hover */

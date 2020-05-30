@@ -1,28 +1,35 @@
-<h1>Create user</h1>
+{%  extends 'pages/base.html' %}
 
-<form method="POST">
-    Username: <input type="text" name="username"/>
-    <br/>
-    Full name: <input type="text" name="full_name"/>
-    <br/>
-    Email: <input type="email" name="email"/>
-    <br/>
-    Password: <input type="password" name="password"/>
-    <br/>
-    Type:
+{% block title %}Home{% endblock %}
 
-    <br/>
-    <input type="radio" id="student" name="type" value="student">
-    <label for="student">Student</label><br>
-    <input type="radio" id="teacher" name="type" value="teacher">
-    <label for="teacher">Teacher</label><br>
-    <input type="radio" id="parent" name="type" value="parent">
-    <label for="parent">Parent</label>
+{% block content %}
+    <div class="html-mobile-background"></div>
+    <div class="flex-container">
+      <div class="container">
+          <h2 id="sign-up-hero">Welcome to Swot</h2>
+          <h2 id="sign-up-sub">Sign up to get started</h2>
+      </div>
 
-    <input type="text" name="g-recaptcha" id="g-recaptcha" hidden/>
+      <div class="container sign-up-form">
+        <form id="form" method="POST" action="{{ url_for('api.users.create') }}">
+          <input name="full_name" type="text" class="input-field" placeholder="Full name"/>
+          <input name="email" type="text" class="input-field" placeholder="Email"/>
+          <input name="password" type="password" class="input-field" placeholder="Password"/>
+          <input name="password_confirm" type="password" class="input-field" placeholder="Confirm password"/>
 
-    <br/>
-    <input type="submit" name="email">
-</form>
+          <input type="radio" id="teacher" name="type" value="teacher">
+          <label for="teacher">Teacher</label><br>
+          <input type="radio" id="student" name="type" value="student">
+          <label for="student">Student</label><br>
+          <input type="radio" id="parent" name="type" value="parent">
+          <label for="parent">Parent</label>
 
-{% include 'utils/recaptcha.html' %}
+          <input name="g-recaptcha" id="g-recaptcha" hidden/>
+
+          <input type="submit" class="input-confirm" value="Sign up"/>
+        </form>
+      </div>
+    </div>
+
+    {% include "utils/recaptcha.html" %}
+{% endblock %}

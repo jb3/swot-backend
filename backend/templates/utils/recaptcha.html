@@ -1,12 +1,12 @@
-<script src="https://www.google.com/recaptcha/api.js?render=6LcY6d4UAAAAABMsK_j7Iucn2xyOj6lY8LfTsTqW"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LdM9P0UAAAAAMVQDi28JYlUHw_i99wmoNH1j2xJ"></script>
 <script>
 grecaptcha.ready(function() {
-    grecaptcha.execute('6LcY6d4UAAAAABMsK_j7Iucn2xyOj6lY8LfTsTqW', {action: 'create'}).then(function(token) {
+    grecaptcha.execute('6LdM9P0UAAAAAMVQDi28JYlUHw_i99wmoNH1j2xJ', {action: 'create'}).then(function(token) {
        setToken(token);
     });
-    
+
     setInterval(() => {
-        grecaptcha.execute('6LcY6d4UAAAAABMsK_j7Iucn2xyOj6lY8LfTsTqW', {action: 'create'}).then(function(token) {
+        grecaptcha.execute('6LdM9P0UAAAAAMVQDi28JYlUHw_i99wmoNH1j2xJ', {action: 'create'}).then(function(token) {
            setToken(token);
         });
     }, 1000 * 60 * 1.5)

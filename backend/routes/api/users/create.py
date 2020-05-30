@@ -30,7 +30,6 @@ class UserCreate(Route):
             "email",
             "password",
             "type",
-            "username",
             "full_name",
             "g-recaptcha",
         ]
@@ -84,6 +83,14 @@ class UserCreate(Route):
                 jsonify({"status": "error", "field": ["recaptcha", "failed"]}),
                 400,
             )
+
+        if data.pop("password_confirm") != data["password"]:
+            return (
+                jsonify({"status": "error", "field": ["password", "does not match"]}),
+                400,
+            )
+
+        data["username"] = data["full_name"].lower().replace(" ", "_")
 
         # Create a new user with the provided data
         new_user = User(**data)
