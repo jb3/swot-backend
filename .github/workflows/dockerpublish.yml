@@ -28,9 +28,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Build and publish Docker image
-        uses: mattdavis0351/actions/docker-gpr@v1
+      - name: Build Docker image
+        run: docker build . --file Dockerfile --t j03b/swot-backend/swot:latest
+
+      - name: Publish Docker
+        uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          image-name: swot:latest
-          dockerfile-location: .
+          name: j03b/swot-backend/swot
+          username: j03b
+          password: ${{ secrets.GITHUB_TOKEN }}
+          name: docker.pkg.github.com
