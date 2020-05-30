@@ -134,7 +134,7 @@ class UserSignUp(Route):
                     data["username"] += str(acc)
                     break
 
-        data.pop("_csrf_token")
+        data.pop("csrf_token")
 
         # Create a new user with the provided data
         new_user = User(**data)
