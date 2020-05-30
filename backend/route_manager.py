@@ -5,11 +5,12 @@ import inspect
 import typing
 from pathlib import Path
 
-from flask import Blueprint, Flask, Response
+from flask import Blueprint, Flask, Response, session
 
 from .config import CONFIG
-from .database import connect
+from .database import connect, Session
 from .mappings import MAPPINGS
+from .models import User
 from .route import Route
 
 
@@ -25,7 +26,7 @@ class RouteManager:
         self.app._static_folder = str(Path.cwd() / "backend" / "static")
 
         # Update the flask configuration from the custom config file
-        self.app.config.from_object(dict(CONFIG.flask))
+        self.app.config.update(**dict(CONFIG.flask))
 
         # Register the after_request hook with flask to run a function
         # after every request
@@ -37,13 +38,13 @@ class RouteManager:
         # Load all the routes
         self.load_routes()
 
+        self.app.context_processor(self.inject_user)
+
     def run(self: "RouteManager") -> None:
         """Start the flask application."""
         # Start the web application on the parameters provided in YAML
         self.app.run(
-            host=CONFIG.host.host,
-            port=CONFIG.host.port,
-            debug=CONFIG.host.debug,
+            host=CONFIG.host.host, port=CONFIG.host.port, debug=CONFIG.host.debug,
         )
 
     @staticmethod
@@ -54,11 +55,23 @@ class RouteManager:
 
         return response
 
+    @staticmethod
+    def inject_user() -> dict:
+        """Inject a user variable into all templates."""
+        user = None
+
+        if session.get("uid"):
+            s = Session()
+            uid = session.get("uid")
+            user = s.query(User).filter_by(id=uid).first()
+
+        return dict(user=user)
+
     def load_from_key_or_recurse(
         self: "RouteManager",
         namespace: str,
         bp_name: str,
-        data: typing.Union[dict, str]
+        data: typing.Union[dict, str],
     ) -> None:
         """
         Load a mapping file or recurse into a directory.
@@ -98,18 +111,13 @@ class RouteManager:
                         member.setup(bp)  # call the setup method of the route
 
             # Register the blueprint we created at the provided mount path
-            self.app.register_blueprint(
-                bp,
-                url_prefix="/" + bp_name.replace(".", "/")
-            )
+            self.app.register_blueprint(bp, url_prefix="/" + bp_name.replace(".", "/"))
         else:
             # If we are in a dictionary we need to iterate through all the
             # items but have a namespace set so we mount in the namespace
             for key, val in data.items():
                 self.load_from_key_or_recurse(
-                    f"{namespace}{bp_name}/",
-                    f"{bp_name}.{key.replace('/', '')}",
-                    val
+                    f"{namespace}{bp_name}/", f"{bp_name}/{key.replace('/', '')}", val
                 )
 
     def load_routes(self: "RouteManager") -> None:

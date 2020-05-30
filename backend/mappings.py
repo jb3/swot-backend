@@ -10,9 +10,10 @@ the routes directory.
 # so "api": {"users": "users"} will mount /api/users
 # to the "users" Python module
 MAPPINGS = {
-  "api": {
+    # API endpoints
+    "api": {"users": "users", "/": "index"},
+    # Staticish pages
+    "/": "pages",
+    # User management pages
     "users": "users",
-    "/": "index"
-  },
-  "/": "pages"
 }

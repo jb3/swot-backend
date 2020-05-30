@@ -1,0 +1,21 @@
+host:
+  host: "127.0.0.1"
+  port: 4000
+  debug: true
+  migrate_on_startup: true
+
+recaptcha:
+  key: "ABC"
+
+flask:
+  SECRET_KEY: "abcdef"
+
+db:
+  use_sqlite: false
+
+  host: "127.0.0.1"
+  port: 5432
+
+  username: "swot"
+  password: "abcdef"
+  database: "swot"

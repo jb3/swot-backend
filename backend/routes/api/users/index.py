@@ -1,5 +1,5 @@
 """Index page for the User API."""
-from flask import jsonify, url_for
+from flask import jsonify
 
 from backend.database import Session
 from backend.models import User
@@ -30,9 +30,6 @@ class UserIndex(Route):
 
             # Get rid of the password key for security
             d.pop("password")
-
-            # Add a goto key to link to the user creation page
-            d["goto"] = url_for("api.users.create")
 
             # Add it to the temporary list
             data.append(d)

@@ -1,0 +1,59 @@
+{%  extends 'pages/base.html' %}
+
+{% block title %}Sign up{% endblock %}
+
+{% block content %}
+    <div class="html-mobile-background"></div>
+    <div class="flex-container">
+      <div class="container">
+          <h2 id="user-hero">Welcome to Swot</h2>
+          <h2 id="user-sub">Sign up to get started</h2>
+      </div>
+
+
+      <div class="container user-form">
+        <form id="form" method="POST" action="{{ url_for('users.sign_up') }}">
+          {% if errors["full_name"] %}
+            <span class="error">{{ errors["full_name"] }}</span>
+          {% endif %}
+          <input name="full_name" type="text" class="input-field" placeholder="Full name"/>
+          {% if errors["email"] %}
+            <span class="error">{{ errors["email"] }}</span>
+          {% endif %}
+          <input name="email" type="text" class="input-field" placeholder="Email"/>
+          {% if errors["password"] %}
+            <span class="error">{{ errors["password"] }}</span>
+          {% endif %}
+          <input name="password" type="password" class="input-field" placeholder="Password"/>
+          {% if errors["password_confirm"] %}
+            <span class="error">{{ errors["password_confirm"] }}</span>
+          {% endif %}
+          <input name="password_confirm" type="password" class="input-field" placeholder="Confirm password"/>
+
+          {% if errors["type"] %}
+            <span class="error">{{ errors["type"] }}</span>
+          {% endif %}
+          <label class="type-select">
+            <input type="radio" value="teacher" name="type">
+            <span>Teacher</span>
+          </label>
+
+          <label class="type-select">
+            <input type="radio" value="student" name="type">
+            <span>Student</span>
+          </label>
+
+          <label class="type-select">
+            <input type="radio" value="parent" name="type">
+            <span>Parent</span>
+          </label>
+
+          <input name="g-recaptcha" id="g-recaptcha" hidden/>
+
+          <input type="submit" class="input-confirm" value="Sign up"/>
+        </form>
+      </div>
+    </div>
+
+    {% include "utils/recaptcha.html" %}
+{% endblock %}

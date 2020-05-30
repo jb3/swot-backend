@@ -2,33 +2,6 @@
 
 {% block title %}Home{% endblock %}
 
-{% block head_extra %}
-<style>
-
-    .html-mobile-background {
-        position: fixed;
-        z-index: -1;
-        top: 0;
-        left: 0;
-        width: 300%;
-        height: 100%; /* To compensate for mobile browser address bar space */
-        background: url(/static/img/home-background.jpg) no-repeat;
-        background-size: 100% 100%;
-    }
-
-    @media (min-width: 600px) {
-        html {
-            background: url(/static/img/home-background.jpg) no-repeat center center fixed;
-            background-size: cover;
-        }
-        .html-mobile-background {
-            display: none;
-        }
-    }
-</style>
-
-{% endblock %}
-
 {% block content %}
     <div class="html-mobile-background"></div>
     <div class="container">

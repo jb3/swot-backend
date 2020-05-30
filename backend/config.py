@@ -10,7 +10,7 @@ def get_config() -> AttrDict:
     if Path("config.yaml").exists():
         config_path = "config.yaml"
     else:
-        print("WARNING: No config set, defaulting to config-exampl.yaml")
+        print("WARNING: No config set, defaulting to config-example.yaml")
         print("WARNING: To get rid of this warning, copy config-example.yaml")
         print("WARNING: to a new file called config.yaml and edit")
         config_path = "config-example.yaml"
