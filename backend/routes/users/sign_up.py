@@ -114,11 +114,28 @@ class UserSignUp(Route):
 
         data["username"] = data["full_name"].lower().replace(" ", "_")
 
-        # Create a new user with the provided data
-        new_user = User(**data)
-
         # Create a new session with the database
         sess = Session()
+
+        user = sess.query(User).filter_by(username=data["username"])
+        acc = 0
+
+        if user is not None:
+            while True:
+                acc += 1
+
+                user = (
+                    sess.query(User)
+                    .filter_by(username=data["username"] + str(acc))
+                    .first()
+                )
+
+                if user is None:
+                    data["username"] += str(acc)
+                    break
+
+        # Create a new user with the provided data
+        new_user = User(**data)
 
         try:
             # Commit the new user to the database if no errors have occurred
@@ -134,7 +151,7 @@ class UserSignUp(Route):
             # with a constraint on the database (i.e. username, email)
             if "duplicate key value" in e.orig.args[0]:
                 # Parse the error to find the offending field
-                field = self._get_field(e.orig.args[0])
+                field = self._get_unique_failure(e.orig.args[0])
 
                 errors[field] = f"{field.replace('_', ' ').capitalize()} already in use"
 
