@@ -96,10 +96,20 @@ body {
 .flex-container {
   display: flex;
   align-items: center;
+  width: 100%;
+  justify-content: center;
 }
 
 .container {
     padding: 40px;
+}
+
+.user-container {
+    padding: 40px;
+    background-color: rgba(255, 255, 255, 0.9);
+    margin-top: 20px;
+    align-self: center;
+    width: 80%;
 }
 
 #navbar {

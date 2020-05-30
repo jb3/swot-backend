@@ -1,0 +1,27 @@
+{%  extends 'pages/base.html' %}
+
+{% block title %}User portal{% endblock %}
+
+{% block content %}
+    <div class="html-mobile-background"></div>
+    <div class="flex-container">
+      <div class="user-container">
+        <h1>User portal</h1>
+        <h3>Information for {{ user.full_name }}</h3>
+
+        <form>
+            <label>Username:</label>
+            <input type="text" class="input-field" disabled value="{{ user.username }}"/>
+
+            <label>ID:</label>
+            <input type="text" class="input-field" disabled value="{{ user.id }}"/>
+
+            <label>Full name:</label>
+            <input type="text" class="input-field" disabled value="{{ user.full_name }}"/>
+
+            <label>Email:</label>
+            <input type="text" class="input-field" disabled value="{{ user.email }}"/>
+        </form>
+      </div>
+    </div>
+{% endblock %}
