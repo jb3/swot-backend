@@ -6,6 +6,7 @@ import typing
 from pathlib import Path
 
 from flask import Blueprint, Flask, Response, session
+from flask_wtf.csrf import CSRFProtect
 
 from .config import CONFIG
 from .database import connect, Session
@@ -31,6 +32,9 @@ class RouteManager:
         # Register the after_request hook with flask to run a function
         # after every request
         self.app.after_request(self.after_request)
+
+        # Protect the application from Cross-Site Request Forgery
+        CSRFProtect(self.app)
 
         # Create an app instance of the DB
         self.db = connect()

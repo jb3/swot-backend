@@ -8,3 +8,4 @@ httpx
 gunicorn
 alembic
 argon2-cffi
+Flask-WTF

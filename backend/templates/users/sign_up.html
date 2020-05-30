@@ -49,6 +49,7 @@
           </label>
 
           <input name="g-recaptcha" id="g-recaptcha" hidden/>
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
           <input type="submit" class="input-confirm" value="Sign up"/>
         </form>

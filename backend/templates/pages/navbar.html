@@ -31,5 +31,15 @@
             <p class="nav-brand">Logged in as {{ user.full_name }}</p>
         </a>
     </li>
+
+    <li class="nav-item nav-right">
+      <a class="no-decoration" onclick="document.getElementById('logout-form').submit()">
+          <p class="nav-brand">Logout</p>
+      </a>
+    </li>
     {% endif %}
 </ul>
+
+<form method="POST" id="logout-form" action="{{ url_for('users.logout') }}">
+  <input hidden type="text" name="csrf_token" value="{{ csrf_token() }}"/>
+</form>
