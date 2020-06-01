@@ -13,7 +13,7 @@ class Class(Base):
     __tablename__ = "classes"
 
     id = Column(Integer, primary_key=True)
-    name = Column(String, unique=True, nullable=False)
+    name = Column(String, unique=False, nullable=False)
     code = Column(String, unique=True, nullable=False)
     owner_id = Column(Integer, ForeignKey("users.id"), nullable=False)
 
