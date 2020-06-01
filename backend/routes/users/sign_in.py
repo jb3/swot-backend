@@ -1,6 +1,7 @@
 """Route for signing into Swot."""
 import httpx
 from argon2 import PasswordHasher
+from argon2.exceptions import VerifyMismatchError
 from flask import redirect, render_template, request, Response, session, url_for
 
 from backend.config import CONFIG
@@ -81,9 +82,9 @@ class UserSignIn(Route):
         if user is None:
             errors["email"] = "Email or password incorrect"
 
-        valid = hasher.verify(user.password, data["password"])
-
-        if not valid:
+        try:
+            hasher.verify(user.password, data["password"])
+        except VerifyMismatchError:
             errors["email"] = "Email or password incorrect"
 
         # If no errors were raised then the user creation succeeded
