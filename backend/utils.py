@@ -11,7 +11,7 @@ from backend.database import Session
 from backend.models import User
 
 
-def authenticated(type: str = "any") -> Callable:
+def authenticated(user_type: str = "any") -> Callable:
     """
     Decorate a route to ensure access is by an authenticated user.
 
@@ -33,7 +33,7 @@ def authenticated(type: str = "any") -> Callable:
                 g.user = user
 
                 if user:
-                    if user.type != type and type != "any":
+                    if user_type not in (user.type, "any"):
                         # We are looking for a different type of user, return HTTP 403
                         # which is the error code for unauthorized access.
                         return abort(403)
