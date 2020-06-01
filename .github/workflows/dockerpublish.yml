@@ -10,7 +10,7 @@ env:
   IMAGE_NAME: swot
 
 jobs:
-  test:
+  test_docker_image:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,7 +19,7 @@ jobs:
       - name: Test build Docker image
         run: docker build . --file Dockerfile
 
-  push:
+  push_docker_image:
     needs: test
 
     runs-on: ubuntu-latest

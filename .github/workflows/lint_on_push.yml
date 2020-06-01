@@ -3,7 +3,7 @@ name: Test on push
 on: [push]
 
 jobs:
-  lint:
+  lint_code:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,7 +24,7 @@ jobs:
       run: |
         flake8 . --count --statistics
 
-  test:
+  pytest_code:
     runs-on: ubuntu-latest
 
     steps:
