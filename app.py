@@ -3,10 +3,6 @@
 from backend.config import CONFIG
 from backend.route_manager import RouteManager
 
-import logging
-
-logging.basicConfig(level=logging.DEBUG)
-
 manager = RouteManager()
 
 if CONFIG.host.migrate_on_startup:
