@@ -31,7 +31,7 @@ class CreateClass(Route):
             )
 
         # Confirm the name is not just spaces
-        if request.form.get("name").isspace():
+        if request.form.get("name").isspace() or request.form.get("name") == "":
             return render_template(
                 "teacher/create.html", error="You need to provide a name for your class"
             )
