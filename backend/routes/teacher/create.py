@@ -15,13 +15,13 @@ class CreateClass(Route):
     path = "/create"
 
     @staticmethod
-    @authenticated(type="teacher")
+    @authenticated(user_type="teacher")
     def get() -> Response:
         """Display form to the user."""
         return render_template("teacher/create.html")
 
     @staticmethod
-    @authenticated(type="teacher")
+    @authenticated(user_type="teacher")
     def post() -> Response:
         """Create a new class with provided data."""
         # Confirm a name was passed

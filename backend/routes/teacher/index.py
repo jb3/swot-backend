@@ -13,7 +13,7 @@ class TeacherPortal(Route):
     path = "/"
 
     @staticmethod
-    @authenticated(type="teacher")
+    @authenticated(user_type="teacher")
     def get() -> Response:
         """Display a portal page to the user."""
         return render_template("teacher/index.html")
