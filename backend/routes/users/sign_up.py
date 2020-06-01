@@ -148,6 +148,7 @@ class UserSignUp(Route):
                 sess.commit()
 
                 sess.refresh(new_user)
+                sess.close()
         except IntegrityError as e:
             # An IntegrityError was raised, which means there was an issue
             # with a constraint on the database (i.e. username, email)

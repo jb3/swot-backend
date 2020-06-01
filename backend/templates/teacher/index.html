@@ -1,0 +1,34 @@
+{%  extends 'pages/base.html' %}
+
+{% block title %}Teacher portal{% endblock %}
+
+{% block content %}
+    <div class="html-mobile-background"></div>
+    <div class="flex-container center-flex">
+      <div class="user-container">
+        <h1>Teacher portal</h1>
+        <h3>Welcome back {{ user.full_name }}, your classes:</h3>
+
+        <div class="container">
+        <table class="teacher-class-table">
+          <thead>
+            <th>Class name</th>
+            <th>Join code</th>
+            <th>Member count</th>
+          </thead>
+          <tbody>
+          {% for class in user.owned_classes %}
+            <tr>
+              <td>{{ class.name }}</td>
+              <td onmouseover="this.innerHTML = '{{class.code}}'" onmouseout="this.innerHTML = 'Hover to reveal'">Hover to reveal</td>
+              <td>{{ class.members | length }}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+        <a class="a-button" href="{{ url_for("teacher.create") }}">Create a new class!</a>
+      </div>
+    </div>
+{% endblock %}

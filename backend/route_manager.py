@@ -5,7 +5,7 @@ import inspect
 import typing
 from pathlib import Path
 
-from flask import Blueprint, Flask, Response, session
+from flask import Blueprint, Flask, g, Response, session
 from flask_wtf.csrf import CSRFProtect
 
 from .config import CONFIG
@@ -54,8 +54,11 @@ class RouteManager:
     @staticmethod
     def after_request(response: Response) -> Response:
         """Process a response before it is sent to the client."""
-        # if "text/html" in response.headers["Content-Type"]:
-        #    response.headers["Content-Type"] = "text/plain"
+        if hasattr(g, "inject_sess"):
+            g.inject_sess.close()
+
+        if hasattr(g, "authenticated_sess"):
+            g.authenticated_sess.close()
 
         return response
 
@@ -68,6 +71,7 @@ class RouteManager:
             s = Session()
             uid = session.get("uid")
             user = s.query(User).filter_by(id=uid).first()
+            g.inject_sess = s
 
         return dict(user=user)
 

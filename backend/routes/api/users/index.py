@@ -34,5 +34,7 @@ class UserIndex(Route):
             # Add it to the temporary list
             data.append(d)
 
+        sess.close()
+
         # Return a JSON copy of the database quuery
         return jsonify(data)
