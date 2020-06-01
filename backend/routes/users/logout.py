@@ -3,6 +3,7 @@
 from flask import redirect, Response, session, url_for
 
 from backend.route import Route
+from backend.utils import authenticated
 
 
 class UserLogout(Route):
@@ -12,6 +13,7 @@ class UserLogout(Route):
     path = "/logout"
 
     @staticmethod
+    @authenticated()
     def post() -> Response:
         """Log users out when they post from the navbar form."""
         # By this point CSRF has been validated so we know this is safe.

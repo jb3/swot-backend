@@ -76,6 +76,8 @@ class UserSignIn(Route):
 
         user = sess.query(User).filter_by(email=data["email"]).first()
 
+        sess.close()
+
         if user is None:
             errors["email"] = "Email or password incorrect"
 

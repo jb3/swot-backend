@@ -1,0 +1,20 @@
+{%  extends 'pages/base.html' %}
+
+{% block title %}Create new class{% endblock %}
+
+{% block content %}
+    <div class="html-mobile-background"></div>
+    <div class="flex-container center-flex">
+      <div class="user-container">
+        <h1>Create a class</h1>
+          <form action="{{ url_for("teacher.create") }}" method="POST" class="container user-form">
+            <input type="text" hidden name="csrf_token" value="{{ csrf_token() }}"/>
+            {% if error %}
+              <span class="error">{{ error }}</span>
+            {% endif %}
+            <input class="teacher-input-field" name="name" placeholder="Name"/>
+            <input type="submit" class="input-confirm" value="Create class"/>
+          </form>
+      </div>
+    </div>
+{% endblock %}

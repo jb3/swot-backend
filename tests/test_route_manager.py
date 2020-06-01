@@ -21,4 +21,5 @@ def test_after_request(route_manager: RouteManager) -> None:
     """Check the after_request callback works."""
     resp = Response("Hello, world!")
 
-    route_manager.after_request(resp)
+    with route_manager.app.app_context():
+        route_manager.after_request(resp)

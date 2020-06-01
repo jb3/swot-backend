@@ -7,8 +7,12 @@
     <div class="flex-container center-flex">
       <div class="user-container">
         <h1>User portal</h1>
-        <h3>Information for {{ user.full_name }}</h3>
 
+        {% if user.type == "teacher" %}
+          <a class="a-button" href="{{ url_for("teacher.index") }}">Visit teacher portal</a>
+        {% endif %}
+
+        <h3>Information for {{ user.full_name }}</h3>
         <form>
             <label>Username:</label>
             <input type="text" class="input-field" disabled value="{{ user.username }}"/>
@@ -21,6 +25,9 @@
 
             <label>Email:</label>
             <input type="text" class="input-field" disabled value="{{ user.email }}"/>
+
+            <label>User type:</label>
+            <input type="text" class="input-field" disabled value="{{ user.type }}"/>
         </form>
       </div>
     </div>
