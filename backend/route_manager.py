@@ -62,7 +62,7 @@ class RouteManager:
     def inject_user(sess: Session) -> dict:
         """Inject a user variable into all templates."""
 
-        def inject():
+        def inject() -> dict:
             user = None
 
             if session.get("uid"):
