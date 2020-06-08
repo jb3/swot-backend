@@ -1,4 +1,4 @@
-"""Index page for the User API."""
+"""Index page for Swot."""
 from flask import render_template
 
 from backend.route import Route

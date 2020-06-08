@@ -12,8 +12,7 @@ class UserPortal(Route):
     name = "user"
     path = "/user"
 
-    @staticmethod
     @authenticated()
-    def get() -> Response:
+    def get(self) -> Response:
         """Display a portal page to the user."""
         return render_template("users/user.html")

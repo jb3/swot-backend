@@ -9,7 +9,11 @@
         <h1>User portal</h1>
 
         {% if user.type == "teacher" %}
-          <a class="a-button" href="{{ url_for("teacher.index") }}">Visit teacher portal</a>
+          <a class="a-button" href="{{ url_for("teacher/.index") }}">Visit teacher portal</a>
+        {% endif %}
+
+        {% if user.type == "student" %}
+          <a class="a-button" href="{{ url_for("student.index") }}">Visit student portal</a>
         {% endif %}
 
         <h3>Information for {{ user.full_name }}</h3>

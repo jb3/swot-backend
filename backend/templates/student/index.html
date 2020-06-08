@@ -1,0 +1,41 @@
+{%  extends 'pages/base.html' %}
+
+{% block title %}Student portal{% endblock %}
+
+{% block content %}
+    <div class="html-mobile-background"></div>
+    <div class="flex-container center-flex">
+      <div class="user-container">
+        <h1>Student classes</h1>
+        <h3>Welcome back {{ user.full_name }}, your classes:</h3>
+
+        <div class="container">
+          <table class="teacher-class-table">
+            <thead>
+              <th>Class name</th>
+              <th>Owner
+            </thead>
+            <tbody>
+            {% for membership in user.classes %}
+              <tr>
+                <td>{{ membership.cls.name }}</td>
+                <td>{{ membership.cls.owner.full_name }}</td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="half-width-container">
+          {% if error %}
+            <span class="error">{{ error }}</span>
+          {% endif %}
+          <form class="form-inline" method="POST" action="{{ url_for("student.join") }}">
+            <input type="text" hidden name="csrf_token" value="{{ csrf_token() }}"/>
+            <input name="class_code" type="text" class="input-field white half-width no-vertical-margin" placeholder="Class code"/>
+            <input type="submit" class="input-confirm quarter-width no-vertical-margin left-margin" value="Join class"/>
+          </form>
+        </div>
+      </div>
+    </div>
+{% endblock %}

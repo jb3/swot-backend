@@ -7,7 +7,7 @@
     <div class="flex-container center-flex">
       <div class="user-container">
         <h1>Create a class</h1>
-          <form action="{{ url_for("teacher.create") }}" method="POST" class="container user-form">
+          <form action="{{ url_for("teacher/.create") }}" method="POST" class="container user-form">
             <input type="text" hidden name="csrf_token" value="{{ csrf_token() }}"/>
             {% if error %}
               <span class="error">{{ error }}</span>

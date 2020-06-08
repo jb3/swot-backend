@@ -1,0 +1,47 @@
+{%  extends 'pages/base.html' %}
+
+{% block title %}Manage class {{ cls.name }}{% endblock %}
+
+{% block content %}
+    <script>
+      const deleteUser = (member_id) => {
+        const headers = new Headers();
+        headers.append("X-CSRFToken", "{{ csrf_token() }}")
+        headers.append("Content-Type", "application/json")
+        fetch("{{ url_for("teacher/class.details", class_id=cls.id) }}", { headers: headers, method: "DELETE", body: JSON.stringify({"user_id": member_id})}).then(() => window.location.reload());
+      };
+    </script>
+
+    <div class="html-mobile-background"></div>
+    <div class="flex-container center-flex">
+      <div class="user-container">
+        <h1>{{ cls.name }}</h1>
+        <h3>Class code</h3>
+        <pre>{{ cls.code }}</pre>
+        <h3>Members</h3>
+        <table class="teacher-class-table">
+          <thead>
+            <th>Student name</th>
+            <th>Student email</th>
+            <th>Remove user</th>
+          </thead>
+          <tbody>
+          {% for membership in cls.members %}
+            <tr>
+              <td>{{ membership.user.full_name }}</td>
+              <td onmouseover="this.innerHTML = '{{membership.user.email}}'" onmouseout="this.innerHTML = 'Hover to reveal'">Hover to reveal</td>
+              <td><button class="input-confirm quarter-width destructive" onclick="deleteUser({{ membership.user.id }})">Delete</button></td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+        <h3>Settings</h3>
+        <button class="input-confirm quarter-width destructive" onclick="document.getElementById('delete-form').submit()">Remove</button>
+      </div>
+    </div>
+
+    <form method="POST" id="delete-form" action="{{ url_for('teacher/class.delete', class_id=cls.id) }}">
+      <input hidden type="text" name="csrf_token" value="{{ csrf_token() }}"/>
+    </form>
+
+  {% endblock %}

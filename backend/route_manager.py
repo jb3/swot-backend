@@ -39,10 +39,12 @@ class RouteManager:
         # Create an app instance of the DB
         self.db = connect()
 
+        self.sess = Session()
+
         # Load all the routes
         self.load_routes()
 
-        self.app.context_processor(self.inject_user)
+        self.app.context_processor(self.inject_user(self.sess))
 
     def run(self: "RouteManager") -> None:
         """Start the flask application."""
@@ -54,26 +56,22 @@ class RouteManager:
     @staticmethod
     def after_request(response: Response) -> Response:
         """Process a response before it is sent to the client."""
-        if hasattr(g, "inject_sess"):
-            g.inject_sess.close()
-
-        if hasattr(g, "authenticated_sess"):
-            g.authenticated_sess.close()
-
         return response
 
     @staticmethod
-    def inject_user() -> dict:
+    def inject_user(sess: Session) -> dict:
         """Inject a user variable into all templates."""
-        user = None
 
-        if session.get("uid"):
-            s = Session()
-            uid = session.get("uid")
-            user = s.query(User).filter_by(id=uid).first()
-            g.inject_sess = s
+        def inject():
+            user = None
 
-        return dict(user=user)
+            if session.get("uid"):
+                uid = session.get("uid")
+                user = sess.query(User).filter_by(id=uid).first()
+
+            return dict(user=user)
+
+        return inject
 
     def load_from_key_or_recurse(
         self: "RouteManager",
@@ -116,7 +114,9 @@ class RouteManager:
                         and Route in member.__mro__  # derives from Route
                         and member is not Route  # it is not the route class
                     ):  # noqa
-                        member.setup(bp)  # call the setup method of the route
+                        member.setup(
+                            bp, self.sess
+                        )  # call the setup method of the route
 
             # Register the blueprint we created at the provided mount path
             self.app.register_blueprint(bp, url_prefix="/" + bp_name.replace(".", "/"))
