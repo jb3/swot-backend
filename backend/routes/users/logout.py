@@ -12,7 +12,7 @@ class UserLogout(Route):
     name = "logout"
     path = "/logout"
 
-    @authenticated()
+    @authenticated()  # skipcq: PYL-R0201
     def post(self) -> Response:
         """Log users out when they post from the navbar form."""
         # By this point CSRF has been validated so we know this is safe.
