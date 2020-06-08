@@ -1,0 +1,27 @@
+{%  extends 'pages/base.html' %}
+
+{% block title %}About Swot{% endblock %}
+
+{% block content %}
+    <div class="html-mobile-background"></div>
+    <div class="flex-container center-flex">
+      <div class="user-container">
+        <h1>What is Swot?</h1>
+        <p>Swot is an application aimed for usage by teachers in Secondary Schools & Sixth Forms. It provides the following features:</p>
+        <ul>
+          <li>Management of revision, homework and classwork</li>
+          <li>Calendar integration</li>
+          <li>Intuitive class management through a class code system</li>
+        </ul>
+
+        <h1>How can I use Swot?</h1>
+        <p>If you are looking to make use of Swot in your school you can sign up for a teacher account <a href="{{ url_for("users.sign_up") }}">here</a>.</p>
+
+        <h1>Who is Swot made by?</h1>
+        <p>Swot is developed and maintained solely by <a href="https://josephbanks.me">Joseph Banks</a>, a student in the UK who studies Computer Science, History and Mathematics. Joseph built Swot as a part of his Computer Science coursework.</p>
+        <center>
+          <img src="{{ url_for('static', filename='img/headshot.png') }}"/>
+        </center>
+      </div>
+    </div>
+{% endblock %}
