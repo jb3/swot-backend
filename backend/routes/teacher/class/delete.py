@@ -2,8 +2,8 @@
 
 from flask import abort, g, redirect, Response, url_for
 
-from backend.route import Route
 from backend.models import Class
+from backend.route import Route
 from backend.utils import authenticated
 
 
