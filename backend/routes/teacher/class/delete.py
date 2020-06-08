@@ -14,7 +14,7 @@ class ClassInformation(Route):
     path = "/delete/<int:class_id>"
 
     @authenticated(user_type="teacher")
-    def post(self, class_id) -> Response:
+    def post(self, class_id: int) -> Response:
         """Delete a class."""
         cls = self.sess.query(Class).filter_by(id=class_id).first()
 

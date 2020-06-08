@@ -2,8 +2,8 @@
 
 from flask import abort, g, render_template, request, Response
 
-from backend.route import Route
 from backend.models import Class, ClassMembership
+from backend.route import Route
 from backend.utils import authenticated
 
 
@@ -14,7 +14,7 @@ class ClassInformation(Route):
     path = "/<int:class_id>"
 
     @authenticated(user_type="teacher")
-    def get(self, class_id) -> Response:
+    def get(self, class_id: int) -> Response:
         """Display a portal page to the user."""
         cls = self.sess.query(Class).filter_by(id=class_id).first()
 
@@ -27,7 +27,7 @@ class ClassInformation(Route):
         return render_template("teacher/class/details.html", cls=cls)
 
     @authenticated(user_type="teacher")
-    def delete(self, class_id) -> Response:
+    def delete(self, class_id: int) -> Response:
         """Remove a user from a class."""
         membership = (
             self.sess.query(ClassMembership)
