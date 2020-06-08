@@ -16,5 +16,6 @@ MAPPINGS = {
     "/": "pages",
     # User management pages
     "users": "users",
-    "teacher": "teacher",
+    "teacher": {"/": "portal", "class": "class"},
+    "student": "student",
 }

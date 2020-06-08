@@ -3,6 +3,7 @@
 import pytest
 from flask import Blueprint, Flask, testing
 
+from backend.database import Session
 from backend.route import Route
 
 
@@ -25,7 +26,7 @@ class BrokenRoute(Route):
 def create_blueprint() -> Blueprint:
     """Create a blueprint for use in tests."""
     bp = Blueprint("home", __name__)
-    FakeRoute.setup(bp)
+    FakeRoute.setup(bp, Session())
 
     return bp
 
@@ -69,4 +70,4 @@ def test_error_raised_for_invalid_params() -> None:
     bp = Blueprint("home", __name__)
 
     with pytest.raises(RuntimeError):
-        BrokenRoute.setup(bp)
+        BrokenRoute.setup(bp, Session())

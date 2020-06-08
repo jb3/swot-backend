@@ -7,7 +7,6 @@ from typing import Callable
 
 from flask import abort, g, redirect, session, url_for
 
-from backend.database import Session
 from backend.models import User
 
 
@@ -24,12 +23,10 @@ def authenticated(user_type: str = "any") -> Callable:
 
     def wrap(func: Callable) -> Callable:
         @wraps(func)
-        def wrapper(*args, **kwargs):  # noqa
+        def wrapper(self, *args, **kwargs):  # noqa
             uid = session.get("uid")
             if uid:
-                sess = Session()
-                user = sess.query(User).filter_by(id=uid).first()
-                g.authenticated_sess = sess
+                user = self.sess.query(User).filter_by(id=uid).first()
                 g.user = user
 
                 if user:
@@ -38,7 +35,7 @@ def authenticated(user_type: str = "any") -> Callable:
                         # which is the error code for unauthorized access.
                         return abort(403)
 
-                    return func(*args, **kwargs)
+                    return func(self, *args, **kwargs)
 
             return redirect(url_for("users.sign_in"))
 

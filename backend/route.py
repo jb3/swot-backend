@@ -2,6 +2,8 @@
 from flask import Blueprint
 from flask.views import MethodView
 
+from backend.database import Session
+
 
 class Route(MethodView):
     """Base class for the routes."""
@@ -10,8 +12,10 @@ class Route(MethodView):
     blueprint = None
     path = None
 
+    sess = None
+
     @classmethod
-    def setup(cls: "Route", blueprint: Blueprint) -> "Route":
+    def setup(cls: "Route", blueprint: Blueprint, db_session: Session) -> "Route":
         """Register the view with the blueprint."""
         if not cls.path or not cls.name:
             raise RuntimeError("Routes have name and path defined")
@@ -20,5 +24,7 @@ class Route(MethodView):
 
         cls.blueprint = blueprint.name
         cls.name = f"{blueprint.name}-{cls.name}"
+
+        cls.sess = db_session
 
         return cls

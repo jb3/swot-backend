@@ -3,6 +3,7 @@
 from sqlalchemy import Column, ForeignKey, Integer, String, Unicode
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
+from sqlalchemy.schema import PrimaryKeyConstraint
 
 Base = declarative_base()
 
@@ -19,7 +20,7 @@ class Class(Base):
 
     owner = relationship("User", back_populates="owned_classes")
 
-    members = relationship("ClassMembership", back_populates="cls")
+    members = relationship("ClassMembership", back_populates="cls", cascade="delete")
 
 
 class User(Base):
@@ -39,10 +40,15 @@ class User(Base):
     type = Column(String, nullable=False)
 
     # Classes owned by this user
-    owned_classes = relationship("Class", order_by=Class.id, back_populates="owner")
+    owned_classes = relationship(
+        "Class",
+        order_by=Class.id,
+        back_populates="owner",
+        cascade="save-update, merge, delete",
+    )
 
     # Classes joined by this user
-    classes = relationship("ClassMembership", back_populates="user")
+    classes = relationship("ClassMembership", back_populates="user", cascade="delete",)
 
 
 class ClassMembership(Base):
@@ -55,9 +61,10 @@ class ClassMembership(Base):
 
     __tablename__ = "memberships"
 
-    id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     class_id = Column(Integer, ForeignKey("classes.id"), nullable=False)
+
+    __table_args__ = (PrimaryKeyConstraint(user_id, class_id), {})
 
     cls = relationship("Class", back_populates="members")
     user = relationship("User", back_populates="classes")

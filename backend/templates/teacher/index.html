@@ -15,6 +15,7 @@
             <th>Class name</th>
             <th>Join code</th>
             <th>Member count</th>
+            <th>Manage</th>
           </thead>
           <tbody>
           {% for class in user.owned_classes %}
@@ -22,13 +23,14 @@
               <td>{{ class.name }}</td>
               <td onmouseover="this.innerHTML = '{{class.code}}'" onmouseout="this.innerHTML = 'Hover to reveal'">Hover to reveal</td>
               <td>{{ class.members | length }}</td>
+              <td><a href="{{ url_for("teacher/class.details", class_id=class.id) }}">View</a></td>
             </tr>
           {% endfor %}
           </tbody>
         </table>
       </div>
 
-        <a class="a-button" href="{{ url_for("teacher.create") }}">Create a new class!</a>
+        <a class="a-button" href="{{ url_for("teacher/.create") }}">Create a new class!</a>
       </div>
     </div>
 {% endblock %}
