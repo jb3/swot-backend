@@ -1,15 +1,6 @@
 """Provide specifics on a class to a teacher."""
 
-from flask import (
-    abort,
-    g,
-    jsonify,
-    redirect,
-    render_template,
-    request,
-    Response,
-    url_for,
-)
+from flask import abort, g, render_template, request, Response
 
 from backend.route import Route
 from backend.models import Class, ClassMembership

@@ -2,10 +2,9 @@
 
 from flask import g, redirect, render_template, request, Response, url_for
 
-from backend.database import Session
 from backend.route import Route
 from backend.utils import authenticated
-from backend.models import Class, ClassMembership, User
+from backend.models import Class, ClassMembership
 
 
 class StudentJoin(Route):

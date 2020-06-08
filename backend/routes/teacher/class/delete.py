@@ -1,6 +1,6 @@
 """Delete a class and all associated information."""
 
-from flask import abort, g, redirect, render_template, Response, url_for
+from flask import abort, g, redirect, Response, url_for
 
 from backend.route import Route
 from backend.models import Class

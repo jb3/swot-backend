@@ -5,7 +5,7 @@ import inspect
 import typing
 from pathlib import Path
 
-from flask import Blueprint, Flask, g, Response, session
+from flask import Blueprint, Flask, Response, session
 from flask_wtf.csrf import CSRFProtect
 
 from .config import CONFIG

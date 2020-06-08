@@ -7,7 +7,6 @@ from typing import Callable
 
 from flask import abort, g, redirect, session, url_for
 
-from backend.database import Session
 from backend.models import User
 
 
