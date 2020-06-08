@@ -12,7 +12,7 @@ class StudentPortal(Route):
     name = "index"
     path = "/"
 
-    @authenticated(user_type="student")  # skipcq: PYL-R0201
-    def get(self) -> Response:
+    @authenticated(user_type="student")
+    def get(self) -> Response:  # skipcq: PYL-R0201
         """Display a portal page to the user."""
         return render_template("student/index.html")

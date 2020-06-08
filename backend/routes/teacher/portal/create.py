@@ -14,7 +14,7 @@ class CreateClass(Route):
     path = "/create"
 
     @authenticated(user_type="teacher")
-    def get(self) -> Response:
+    def get(self) -> Response:  # skipcq: PYL-R0201
         """Display form to the user."""
         return render_template("teacher/create.html")
 
