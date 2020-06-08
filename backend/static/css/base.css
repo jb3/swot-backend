@@ -31,6 +31,10 @@ label {
   height: 50px;
 }
 
+.destructive {
+  background-color: #ff5555 !important;
+}
+
 .type-select {
   align-self: center;
   padding-right: 10px;
@@ -144,8 +148,40 @@ body {
   justify-content: center;
 }
 
+.form-inline {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.form-inline input {
+  vertical-align: middle;
+}
+
+.half-width {
+  width: 50% !important;
+}
+
+.quarter-width {
+  width: 25% !important;
+}
+
+.left-margin {
+  margin-left: 20px;
+}
+
+.no-vertical-margin {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
 .container {
     padding: 40px;
+}
+
+.half-width-container {
+    padding: 40px;
+    width: 50%;
 }
 
 .user-container {
@@ -154,6 +190,10 @@ body {
     margin-top: 20px;
     align-self: center;
     width: 80%;
+}
+
+.white {
+  background-color: #ffffff;
 }
 
 #navbar {
