@@ -1,13 +1,15 @@
 """Set up the Alembic environment."""
 
-from logging.config import fileConfig
 import sys
+from logging.config import fileConfig
 
 import yaml
 from alembic import context
 from attrdict import AttrDict
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
+from sqlalchemy import engine_from_config, pool
+
+# for 'autogenerate' support
+from backend import models
 
 sys.path.append(".")
 
@@ -32,8 +34,6 @@ config.set_main_option('sqlalchemy.url', url)
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
 fileConfig(config.config_file_name)
-# for 'autogenerate' support
-from backend import models
 # target_metadata = mymodel.Base.metadata
 target_metadata = models.Base.metadata
 

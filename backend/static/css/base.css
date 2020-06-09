@@ -23,6 +23,10 @@ label {
   padding: 15px;
 }
 
+.class-code {
+  font-size: 2.5em;
+}
+
 .teacher-class-table > tbody > tr:hover {
   background-color: rgba(250, 250, 250, 0.9);
 }
@@ -86,6 +90,10 @@ label {
   color: #898989;
 }
 
+.input-field[disabled] {
+  color: #000000;
+}
+
 .teacher-input-field {
   align-self: center;
   margin-bottom: 2%;
@@ -93,6 +101,19 @@ label {
   height: 2em;
   font-size: 1em;
   border: none;
+  background-color: #ffffff;
+  padding-left: 10px;
+  color: #444444;
+}
+
+.teacher-textarea {
+  align-self: center;
+  margin-bottom: 2%;
+  width: 95%;
+  height: 10em;
+  font-size: 1em;
+  border: none;
+  resize: vertical !important;
   background-color: #ffffff;
   padding-left: 10px;
   color: #444444;
@@ -164,6 +185,10 @@ body {
 
 .quarter-width {
   width: 25% !important;
+}
+
+.eigth-width {
+  width: 12.5% !important;
 }
 
 .left-margin {

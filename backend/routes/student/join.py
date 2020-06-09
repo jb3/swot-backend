@@ -1,8 +1,8 @@
 """A portal for allowing students to see their classes."""
 
-from flask import g, redirect, render_template, request, Response, url_for
+from flask import Response, g, redirect, render_template, request, url_for
 
-from backend.models import Class, ClassMembership
+from backend.models import Class, ClassMembership, UserType
 from backend.route import Route
 from backend.utils import authenticated
 
@@ -13,7 +13,7 @@ class StudentJoin(Route):
     name = "join"
     path = "/join"
 
-    @authenticated(user_type="student")
+    @authenticated(user_type=UserType.STUDENT)
     def post(self) -> Response:
         """Display a portal page to the user."""
         code = request.form.get("class_code")

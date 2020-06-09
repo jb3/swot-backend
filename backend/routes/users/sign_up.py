@@ -2,13 +2,13 @@
 import httpx
 import parse
 from argon2 import PasswordHasher
-from flask import redirect, render_template, request, Response, session, url_for
+from flask import Response, redirect, render_template, request, session, url_for
 from sqlalchemy.exc import IntegrityError
 from werkzeug.datastructures import ImmutableMultiDict
 
 from backend.config import CONFIG
 from backend.database import Session
-from backend.models import User
+from backend.models import User, UserType
 from backend.route import Route
 
 
@@ -23,7 +23,7 @@ class UserSignUp(Route):
         """GET request to the Page index."""
         # Render the user creation page
         if session.get("uid"):
-            return redirect(url_for("pages.index"))
+            return redirect(url_for("index.index"))
 
         return render_template("users/sign_up.html", errors={})
 
@@ -43,6 +43,18 @@ class UserSignUp(Route):
             # If the key is missing, return HTTP 400 Bad Request
             if not request.form.get(key) or request.form.get(key).isspace():
                 yield key
+
+    @staticmethod
+    def _parse_type(u_type: str) -> UserType:
+        """Convert a user provided string to an enumerable."""
+        if u_type == "student":
+            parsed_type = UserType.STUDENT
+        elif u_type == "teacher":
+            parsed_type = UserType.TEACHER
+        else:
+            parsed_type = UserType.PARENT
+
+        return parsed_type
 
     @staticmethod
     def _do_recaptcha(gr_resp: str) -> dict:
@@ -114,6 +126,8 @@ class UserSignUp(Route):
 
         data["username"] = data["full_name"].lower().replace(" ", "_")
 
+        data["type"] = self._parse_type(data["type"])
+
         # Create a new session with the database
         sess = Session()
 
@@ -161,6 +175,6 @@ class UserSignUp(Route):
         # If no errors were raised then the user creation succeeded
         if len(errors) == 0:
             session["uid"] = new_user.id
-            return redirect(url_for("pages.index"))
+            return redirect(url_for("index.index"))
 
         return render_template("users/sign_up.html", errors=errors), 400
