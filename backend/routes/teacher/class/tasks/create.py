@@ -61,7 +61,7 @@ class CreateTask(Route):
             ):
                 errors[key] = "You must fill out this field"
 
-        if any(["due_at" in key for key in errors.keys()]):
+        if any("due_at" in key for key in errors):
             errors["due_at"] = "You must fill out this field"
 
         if len(errors) > 0:
