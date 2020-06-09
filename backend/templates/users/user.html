@@ -8,11 +8,11 @@
       <div class="user-container">
         <h1>User portal</h1>
 
-        {% if user.type == "teacher" %}
-          <a class="a-button" href="{{ url_for("teacher/.index") }}">Visit teacher portal</a>
+        {% if user.type.value == "teacher" %}
+          <a class="a-button" href="{{ url_for("teacher.index") }}">Visit teacher portal</a>
         {% endif %}
 
-        {% if user.type == "student" %}
+        {% if user.type.value == "student" %}
           <a class="a-button" href="{{ url_for("student.index") }}">Visit student portal</a>
         {% endif %}
 

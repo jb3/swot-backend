@@ -30,10 +30,11 @@ def authenticated(user_type: str = "any") -> Callable:
                 g.user = user
 
                 if user:
-                    if user_type not in (user.type, "any"):
-                        # We are looking for a different type of user, return HTTP 403
-                        # which is the error code for unauthorized access.
-                        return abort(403)
+                    if user_type != "any":
+                        if user.type is not user_type:
+                            # We are looking for a different type of user, return HTTP
+                            # 403 which is the error code for unauthorized access.
+                            return abort(403)
 
                     return func(self, *args, **kwargs)
 

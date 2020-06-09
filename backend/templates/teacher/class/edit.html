@@ -1,0 +1,32 @@
+{%  extends 'pages/base.html' %}
+
+{% block title %}Edit class{% endblock %}
+
+{% block content %}
+    <div class="html-mobile-background"></div>
+    <div class="flex-container center-flex">
+      <div class="user-container">
+        <h1>Create a class</h1>
+          <form action="{{ url_for("teacher/class.edit", class_id=cls.id) }}" method="POST" class="container user-form">
+            <input type="text" hidden name="csrf_token" value="{{ csrf_token() }}"/>
+            {% if error %}
+              <span class="error">{{ error }}</span>
+            {% endif %}
+            Name: <input class="teacher-input-field" name="name" placeholder="Name" value="{{ cls.name }}"/>
+            Code: <input class="teacher-input-field" disabled value="{{ cls.code }}"/>
+            <input type="submit" class="input-confirm" value="Update class"/>
+          </form>
+
+          <button class="input-confirm quarter-width" onclick="document.getElementById('regenerate-form').submit()">Regenerate code</button>
+          <button class="input-confirm quarter-width destructive" onclick="document.getElementById('delete-form').submit()">Delete class</button>
+      </div>
+    </div>
+
+    <form method="POST" id="delete-form" action="{{ url_for('teacher/class.delete', class_id=cls.id) }}">
+      <input hidden type="text" name="csrf_token" value="{{ csrf_token() }}"/>
+    </form>
+
+    <form method="POST" id="regenerate-form" action="{{ url_for('teacher/class.regenerate', class_id=cls.id) }}">
+      <input hidden type="text" name="csrf_token" value="{{ csrf_token() }}"/>
+    </form>
+{% endblock %}

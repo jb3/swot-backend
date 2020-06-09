@@ -1,0 +1,33 @@
+{%  extends 'pages/base.html' %}
+
+{% block title %}Manage class {{ cls.name }}{% endblock %}
+
+{% block content %}
+
+    <div class="html-mobile-background"></div>
+    <div class="flex-container center-flex">
+      <div class="user-container">
+        <h1>Tasks for {{ cls.name }}</h1>
+        <a class="a-button" href="{{ url_for("teacher/class.details", class_id=cls.id) }}">Return to overview</a>
+        <a class="a-button" href="{{ url_for("teacher/class/tasks.create", class_id=cls.id) }}">Add new task</a>
+        <h3>Tasks</h3>
+        <table class="teacher-class-table">
+          <thead>
+            <th>Task title</th>
+            <th>Due</th>
+            <th>Edit task</th>
+          </thead>
+          <tbody>
+          {% for task in cls.tasks %}
+            <tr>
+              <td>{{ task.title }}</td>
+              <td>{{ task.formatted_date }}</td>
+              <td><a class="a-button" href="{{ url_for("teacher/class/tasks.edit", class_id=cls.id, task_id=task.id) }}">Edit</a></td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  {% endblock %}

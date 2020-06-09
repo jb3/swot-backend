@@ -2,7 +2,8 @@
 import httpx
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
-from flask import redirect, render_template, request, Response, session, url_for
+from flask import (Response, redirect, render_template, request, session,
+                   url_for)
 
 from backend.config import CONFIG
 from backend.database import Session
@@ -21,7 +22,7 @@ class UserSignIn(Route):
         """GET request to the Page index."""
         # Render the user creation page
         if session.get("uid"):
-            return redirect(url_for("pages.index"))
+            return redirect(url_for("index.index"))
 
         return render_template("users/sign_in.html", errors={})
 

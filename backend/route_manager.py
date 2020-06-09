@@ -1,16 +1,13 @@
 """Manage routes for application."""
-import glob
 import importlib
 import inspect
-import typing
 from pathlib import Path
 
 from flask import Blueprint, Flask, Response, session
 from flask_wtf.csrf import CSRFProtect
 
 from .config import CONFIG
-from .database import connect, Session
-from .mappings import MAPPINGS
+from .database import Session, connect
 from .models import User
 from .route import Route
 
@@ -73,12 +70,7 @@ class RouteManager:
 
         return inject
 
-    def load_from_key_or_recurse(
-        self: "RouteManager",
-        namespace: str,
-        bp_name: str,
-        data: typing.Union[dict, str],
-    ) -> None:
+    def load(self: "RouteManager") -> None:
         """
         Load a mapping file or recurse into a directory.
 
@@ -86,51 +78,49 @@ class RouteManager:
         or a dictionary which should be recursed into. This function either
         loads the blueprint or steps down into the dictionary.
         """
-        if isinstance(data, str):
-            # We have a direct mounting like "api": "users"
-            if namespace != "":
-                # We are at the root level
-                name = bp_name
+        blueprints = {}
+
+        used_classes = {}
+
+        for path in Path("backend/routes").rglob("*.py"):
+            file = str(path)
+            # Convert paths like a/b/c to a.b.c as they are Python modules
+            imp = file[:-3].replace("/", ".")
+            bp_name = "/".join(imp.split(".")[::-1][1:][::-1][2:])
+
+            if bp_name == "":
+                bp_name = "index"
+
+            if blueprints.get(bp_name):
+                bp = blueprints.get(bp_name)
             else:
-                # We are inside a dictionary
-                name = data
+                bp = Blueprint(bp_name, imp)
+                blueprints[bp_name] = bp
 
-            # Create a new blueprint for the mount path
-            bp = Blueprint(name, __name__)
+            # Import a the module to the variable
+            module = importlib.import_module(imp)
 
-            # Iterate through all files in the routes directory for this
-            # path
-            for file in glob.glob(f"backend/routes/{namespace}{data}/*.py"):
-                # Convert paths like a/b/c to a.b.c as they are Python modules
-                imp = file[:-3].replace("/", ".")
+            # Iterate through all members of the class
+            for _, member in inspect.getmembers(module):
+                if (
+                    inspect.isclass(member)  # Member is a class
+                    and Route in member.__mro__  # derives from Route
+                    and member is not Route  # it is not the route class
+                ):  # noqa
+                    if member.__name__ in used_classes:
+                        raise RuntimeError(
+                            f"Two classes are using the name, '{member.__name__}' from"
+                            f" {file} and {used_classes[member.__name__]}"
+                        )
+                    used_classes[member.__name__] = file
+                    member.setup(bp, self.sess)  # call the setup method of the route
 
-                # Import a the module to the variable
-                module = importlib.import_module(imp)
+        for path, bp in blueprints.items():
+            if path == "index":
+                path = ""
 
-                # Iterate through all members of the class
-                for _, member in inspect.getmembers(module):
-                    if (
-                        inspect.isclass(member)  # Member is a class
-                        and Route in member.__mro__  # derives from Route
-                        and member is not Route  # it is not the route class
-                    ):  # noqa
-                        member.setup(
-                            bp, self.sess
-                        )  # call the setup method of the route
-
-            # Register the blueprint we created at the provided mount path
-            self.app.register_blueprint(bp, url_prefix="/" + bp_name.replace(".", "/"))
-        else:
-            # If we are in a dictionary we need to iterate through all the
-            # items but have a namespace set so we mount in the namespace
-            for key, val in data.items():
-                self.load_from_key_or_recurse(
-                    f"{namespace}{bp_name}/", f"{bp_name}/{key.replace('/', '')}", val
-                )
+            self.app.register_blueprint(bp, url_prefix="/" + path)
 
     def load_routes(self: "RouteManager") -> None:
         """Load the routes from the route directories."""
-        # For every entry in the mappings
-        for bp_name, path in MAPPINGS.items():
-            # Load the entry
-            self.load_from_key_or_recurse("", bp_name, path)
+        self.load()

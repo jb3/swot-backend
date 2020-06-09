@@ -1,19 +1,19 @@
 """Delete a class and all associated information."""
 
-from flask import abort, g, redirect, Response, url_for
+from flask import Response, abort, g, redirect, url_for
 
-from backend.models import Class
+from backend.models import Class, UserType
 from backend.route import Route
 from backend.utils import authenticated
 
 
-class ClassInformation(Route):
+class ClassDelete(Route):
     """A route for deleting a class."""
 
     name = "delete"
-    path = "/delete/<int:class_id>"
+    path = "/delete/<int:class_id>/edit"
 
-    @authenticated(user_type="teacher")
+    @authenticated(user_type=UserType.TEACHER)
     def post(self, class_id: int) -> Response:
         """Delete a class."""
         cls = self.sess.query(Class).filter_by(id=class_id).first()
@@ -27,4 +27,4 @@ class ClassInformation(Route):
         self.sess.delete(cls)
         self.sess.commit()
 
-        return redirect(url_for("teacher/.index"))
+        return redirect(url_for("teacher.index"))

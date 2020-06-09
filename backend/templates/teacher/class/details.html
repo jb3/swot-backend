@@ -17,7 +17,10 @@
       <div class="user-container">
         <h1>{{ cls.name }}</h1>
         <h3>Class code</h3>
-        <pre>{{ cls.code }}</pre>
+        <pre class="class-code">{{ cls.code }}</pre>
+        <h3>Class settings</h3>
+          <a class="a-button" href="{{ url_for("teacher/class.edit", class_id=cls.id) }}">Edit class details</a>
+          <a class="a-button" href="{{ url_for("teacher/class/tasks.view", class_id=cls.id) }}">Manage tasks</a>
         <h3>Members</h3>
         <table class="teacher-class-table">
           <thead>
@@ -30,18 +33,12 @@
             <tr>
               <td>{{ membership.user.full_name }}</td>
               <td onmouseover="this.innerHTML = '{{membership.user.email}}'" onmouseout="this.innerHTML = 'Hover to reveal'">Hover to reveal</td>
-              <td><button class="input-confirm quarter-width destructive" onclick="deleteUser({{ membership.user.id }})">Delete</button></td>
+              <td><button class="input-confirm destructive" onclick="deleteUser({{ membership.user.id }})">Remove</button></td>
             </tr>
           {% endfor %}
           </tbody>
         </table>
-        <h3>Settings</h3>
-        <button class="input-confirm quarter-width destructive" onclick="document.getElementById('delete-form').submit()">Remove</button>
       </div>
     </div>
-
-    <form method="POST" id="delete-form" action="{{ url_for('teacher/class.delete', class_id=cls.id) }}">
-      <input hidden type="text" name="csrf_token" value="{{ csrf_token() }}"/>
-    </form>
 
   {% endblock %}

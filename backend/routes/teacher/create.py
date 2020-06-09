@@ -1,24 +1,24 @@
-"""A portal for allowing teachers to create a new classe."""
+"""A portal for allowing teachers to create a new classes."""
 
-from flask import g, redirect, render_template, request, Response, url_for
+from flask import Response, g, redirect, render_template, request, url_for
 
-from backend.models import Class
+from backend.models import Class, UserType
 from backend.route import Route
 from backend.utils import authenticated, code_generate
 
 
 class CreateClass(Route):
-    """A route for displaying classes."""
+    """A route for creating classes."""
 
     name = "create"
     path = "/create"
 
-    @authenticated(user_type="teacher")
+    @authenticated(user_type=UserType.TEACHER)
     def get(self) -> Response:  # skipcq: PYL-R0201
         """Display form to the user."""
-        return render_template("teacher/create.html")
+        return render_template("teacher/tasks/create.html")
 
-    @authenticated(user_type="teacher")
+    @authenticated(user_type=UserType.TEACHER)
     def post(self) -> Response:
         """Create a new class with provided data."""
         # Confirm a name was passed
@@ -68,4 +68,4 @@ class CreateClass(Route):
         # Commit changes
         self.sess.commit()
 
-        return redirect(url_for("teacher/.index"))
+        return redirect(url_for("teacher.index"))
