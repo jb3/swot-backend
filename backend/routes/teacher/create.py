@@ -16,7 +16,7 @@ class CreateClass(Route):
     @authenticated(user_type=UserType.TEACHER)
     def get(self) -> Response:  # skipcq: PYL-R0201
         """Display form to the user."""
-        return render_template("teacher/class/create.html")
+        return render_template("teacher/create.html")
 
     @authenticated(user_type=UserType.TEACHER)
     def post(self) -> Response:
