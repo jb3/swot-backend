@@ -24,12 +24,7 @@ class Class(Base):
 
     owner = relationship("User", back_populates="owned_classes")
 
-    members = relationship(
-        "ClassMembership",
-        back_populates="cls",
-        order_by="User.username",
-        cascade="delete",
-    )
+    members = relationship("ClassMembership", back_populates="cls", cascade="delete")
 
     tasks = relationship(
         "Task", back_populates="cls", order_by="Task.due_at.asc()", cascade="delete",
