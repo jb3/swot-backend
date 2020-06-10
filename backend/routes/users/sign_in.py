@@ -2,8 +2,7 @@
 import httpx
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
-from flask import (Response, redirect, render_template, request, session,
-                   url_for)
+from flask import Response, redirect, render_template, request, session, url_for
 
 from backend.config import CONFIG
 from backend.database import Session
@@ -85,7 +84,7 @@ class UserSignIn(Route):
 
         try:
             hasher.verify(user.password, data["password"])
-        except VerifyMismatchError:
+        except (VerifyMismatchError, AttributeError):
             errors["email"] = "Email or password incorrect"
 
         # If no errors were raised then the user creation succeeded
