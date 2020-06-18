@@ -12,6 +12,10 @@ label {
   position: relative;
 }
 
+.task-description {
+  white-space: pre;
+}
+
 .footer {
   color: #aaa;
 }

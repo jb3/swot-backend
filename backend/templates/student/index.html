@@ -70,7 +70,7 @@
           {% for task in due_tasks %}
             <div class="task" data-task="{{task.type.value}}">
               <h3><span class="task-type task-type-{{task.type.value}}">{{task.type.value.title()}}</span> {{ task.title }}</h3>
-              <p>{{ task.description }}</p>
+              <p class="task-description">{{ task.description }}</p>
               <p class="footer">{{ task.cls.name }} • Due {{ task.formatted_date }}</p>
             </div>
           {% endfor %}
