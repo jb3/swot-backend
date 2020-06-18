@@ -23,7 +23,7 @@
               <td>{{ class.name }}</td>
               <td onmouseover="this.innerHTML = '{{class.code}}'" onmouseout="this.innerHTML = 'Hover to reveal'">Hover to reveal</td>
               <td>{{ class.members | length }}</td>
-              <td><a href="{{ url_for("teacher/class.details", class_id=class.id) }}">View</a></td>
+              <td><a class="a-button" href="{{ url_for("teacher/class.details", class_id=class.id) }}">View</a></td>
             </tr>
           {% endfor %}
           </tbody>

@@ -12,6 +12,38 @@ label {
   position: relative;
 }
 
+.footer {
+  color: #aaa;
+}
+
+.task-type {
+  padding: 2px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 30px;
+}
+
+.task-type-homework {
+  background-color: #ffaaaa;
+}
+
+.task-type-revision {
+  background-color: #aaffaa;
+}
+
+.task-type-classwork {
+  background-color: #aaaaff;
+}
+
+.task {
+  background-color: #ffffff;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
 .teacher-class-table {
   width: 100%;
   text-align: center;
