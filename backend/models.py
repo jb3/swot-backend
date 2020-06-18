@@ -120,7 +120,7 @@ class Task(Base):
         if left.days > 1:
             second_comp = f"in {left.days} days"
         elif left.days < -1:
-            second_comp = f"{left.days} ago"
+            second_comp = f"{abs(left.days)} days ago"
         elif left.days == -1:
             second_comp = "yesterday"
         elif left.days == 1:
