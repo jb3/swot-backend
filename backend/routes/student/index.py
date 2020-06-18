@@ -56,6 +56,7 @@ class StudentPortal(Route):
 
     @staticmethod
     def format_date(date: datetime) -> str:
+        """Format a datetime object to a date like 'Thursday, 18th June 2020'."""
         weekday = WEEK_DAYS[date.weekday()]
 
         suffix = ""
