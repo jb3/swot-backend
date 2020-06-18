@@ -36,6 +36,45 @@
             <input type="submit" class="input-confirm quarter-width no-vertical-margin left-margin" value="Join class"/>
           </form>
         </div>
+
+        <h1>Your upcoming tasks</h1>
+        <p>Select task types to filter your list</p>
+
+        <script>
+
+        function changeFilters() {
+          let classwork = document.querySelector("#classwork").checked;
+          let revision = document.querySelector("#revision").checked;
+          let homework = document.querySelector("#homework").checked;
+
+          document.querySelectorAll("div[data-task='homework']").forEach(node => {
+            node.style.display = homework ? '' : 'none'
+          })
+
+          document.querySelectorAll("div[data-task='revision']").forEach(node => {
+            node.style.display = revision ? '' : 'none'
+          })
+
+          document.querySelectorAll("div[data-task='classwork']").forEach(node => {
+            node.style.display = classwork ? '' : 'none'
+          })
+        }
+        </script>
+
+        <input type="checkbox" id="classwork" onclick="changeFilters()" checked><span class="task-type task-type-classwork">Classwork</span>
+        <input type="checkbox" id="revision" onclick="changeFilters()" checked><span class="task-type task-type-revision">Revision</span>
+        <input type="checkbox" id="homework" onclick="changeFilters()" checked><span class="task-type task-type-homework">Homework</span>
+
+        {% for due_date, due_tasks in tasks %}
+          <h2>{{ due_date }}</h2>
+          {% for task in due_tasks %}
+            <div class="task" data-task="{{task.type.value}}">
+              <h3><span class="task-type task-type-{{task.type.value}}">{{task.type.value.title()}}</span> {{ task.title }}</h3>
+              <p>{{ task.description }}</p>
+              <p class="footer">{{ task.cls.name }} • Due {{ task.formatted_date }}</p>
+            </div>
+          {% endfor %}
+        {% endfor %}
       </div>
     </div>
 {% endblock %}
