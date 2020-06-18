@@ -82,9 +82,6 @@ class EditTask(Route):
                 "due_at"
             ] = "Could not parse date, did you enter the digits correctly?"
 
-        if due_at < date.today():
-            errors["due_at"] = "You cannot add an assignment due in the past"
-
         data["type"] = TaskType(data["type"])
         data["due_at"] = due_at
 

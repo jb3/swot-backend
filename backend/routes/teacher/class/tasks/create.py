@@ -85,9 +85,6 @@ class CreateTask(Route):
                 "due_at"
             ] = "Could not parse date, did you enter the digits correctly?"
 
-        if due_at < date.today():
-            errors["due_at"] = "You cannot add an assignment due in the past"
-
         if len(errors) > 0:
             return render_template(
                 "teacher/class/tasks/create.html",
