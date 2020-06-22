@@ -26,7 +26,7 @@ def authenticated(user_type: str = "any") -> Callable:
         def wrapper(self, *args, **kwargs):  # noqa
             uid = session.get("uid")
             if uid:
-                user = self.sess.query(User).filter_by(id=uid).first()
+                user = User.query.filter_by(id=uid).first()
                 g.user = user
 
                 if user:

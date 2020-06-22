@@ -14,9 +14,9 @@ class ClassInformation(Route):
     path = "/<int:class_id>"
 
     @authenticated(user_type=UserType.TEACHER)
-    def get(self, class_id: int) -> Response:
+    def get(self, class_id: int) -> Response:  # skipcq: PYL-R0201
         """Display a portal page to the user."""
-        cls = self.sess.query(Class).filter_by(id=class_id).first()
+        cls = Class.query.filter_by(id=class_id).first()
 
         if not cls:
             return abort(404)
@@ -29,7 +29,7 @@ class ClassInformation(Route):
     @authenticated(user_type=UserType.TEACHER)
     def delete(self, class_id: int) -> Response:
         """Remove a user from a class."""
-        cls = self.sess.query(Class).filter_by(id=class_id).first()
+        cls = Class.query.filter_by(id=class_id).first()
 
         if not cls:
             return abort(404)
@@ -38,7 +38,8 @@ class ClassInformation(Route):
             return abort(403)
 
         membership = (
-            self.sess.query(ClassMembership)
+            ClassMembership
+            .query
             .filter_by(class_id=class_id, user_id=request.get_json().get("user_id"))
             .first()
         )
@@ -46,7 +47,7 @@ class ClassInformation(Route):
         if not membership:
             return abort(400)
 
-        self.sess.delete(membership)
-        self.sess.commit()
+        self.app.db.session.delete(membership)
+        self.app.db.session.commit()
 
         return "OK", 200

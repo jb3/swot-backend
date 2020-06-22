@@ -1,5 +1,5 @@
 """Index page for the User API."""
-from flask import jsonify
+from flask import jsonify, Response
 
 from backend.models import User
 from backend.route import Route
@@ -11,14 +11,15 @@ class UserIndex(Route):
     name = "index"
     path = "/"
 
-    def get(self) -> str:
+    @staticmethod
+    def get() -> Response:
         """GET request to the User index."""
 
         # Create a list to store our result
         data = []
 
         # Query the database for all users
-        for instance in self.sess.query(User).order_by(User.id):
+        for instance in User.query.order_by(User.id):
             # Convert the instance to a dictionary
             d = instance.__dict__
             # Get rid of the state key since it cannot be serialised to JSON

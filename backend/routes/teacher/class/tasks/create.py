@@ -17,7 +17,7 @@ class CreateTask(Route):
     @authenticated(user_type=UserType.TEACHER)
     def get(self, class_id: int) -> Response:  # skipcq: PYL-R0201
         """Display form to the user for task creation."""
-        cls = self.sess.query(Class).filter_by(id=class_id).first()
+        cls = Class.query.filter_by(id=class_id).first()
 
         if not cls:
             return abort(404)
@@ -32,7 +32,7 @@ class CreateTask(Route):
     @authenticated(user_type=UserType.TEACHER)
     def post(self, class_id: int) -> Response:
         """Create a new task with provided data."""
-        cls = self.sess.query(Class).filter_by(id=class_id).first()
+        cls = Class.query.filter_by(id=class_id).first()
 
         if not cls:
             return abort(404)
@@ -101,7 +101,7 @@ class CreateTask(Route):
             type=TaskType(data["type"]),
         )
 
-        self.sess.add(task)
-        self.sess.commit()
+        self.app.db.session.add(task)
+        self.app.db.session.commit()
 
         return redirect(url_for("teacher/class/tasks.view", class_id=class_id))

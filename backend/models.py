@@ -2,31 +2,26 @@
 from datetime import date
 from enum import Enum
 
-from sqlalchemy import Column, ForeignKey, Integer, String, Unicode
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
-from sqlalchemy.schema import PrimaryKeyConstraint
-from sqlalchemy.types import Date
-from sqlalchemy.types import Enum as SQLEnum
+from flask_sqlalchemy import SQLAlchemy
 
-Base = declarative_base()
+db = SQLAlchemy()
 
 
-class Class(Base):
+class Class(db.Model):
     """A model representing a teaching group."""
 
     __tablename__ = "classes"
 
-    id = Column(Integer, primary_key=True)
-    name = Column(String, unique=False, nullable=False)
-    code = Column(String, unique=True, nullable=False)
-    owner_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, unique=False, nullable=False)
+    code = db.Column(db.String, unique=True, nullable=False)
+    owner_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
 
-    owner = relationship("User", back_populates="owned_classes")
+    owner = db.relationship("User", back_populates="owned_classes")
 
-    members = relationship("ClassMembership", back_populates="cls", cascade="delete")
+    members = db.relationship("ClassMembership", back_populates="cls", cascade="delete")
 
-    tasks = relationship(
+    tasks = db.relationship(
         "Task", back_populates="cls", order_by="Task.due_at.asc()", cascade="delete",
     )
 
@@ -39,7 +34,7 @@ class UserType(Enum):
     PARENT = "parent"
 
 
-class User(Base):
+class User(db.Model):
     """
     Class for base users.
 
@@ -48,15 +43,15 @@ class User(Base):
 
     __tablename__ = "users"
 
-    id = Column(Integer, primary_key=True)
-    username = Column(String, unique=True, nullable=False)
-    full_name = Column(String, nullable=False)
-    password = Column(Unicode, nullable=False)
-    email = Column(String, unique=True, nullable=False)
-    type = Column(SQLEnum(UserType), nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String, unique=True, nullable=False)
+    full_name = db.Column(db.String, nullable=False)
+    password = db.Column(db.Unicode, nullable=False)
+    email = db.Column(db.String, unique=True, nullable=False)
+    type = db.Column(db.Enum(UserType), nullable=False)
 
     # Classes owned by this user
-    owned_classes = relationship(
+    owned_classes = db.relationship(
         "Class",
         order_by=Class.id,
         back_populates="owner",
@@ -64,10 +59,12 @@ class User(Base):
     )
 
     # Classes joined by this user
-    classes = relationship("ClassMembership", back_populates="user", cascade="delete",)
+    classes = db.relationship(
+        "ClassMembership", back_populates="user", cascade="delete"
+    )
 
 
-class ClassMembership(Base):
+class ClassMembership(db.Model):
     """
     Represents a student account being a member of a class.
 
@@ -77,13 +74,13 @@ class ClassMembership(Base):
 
     __tablename__ = "memberships"
 
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    class_id = Column(Integer, ForeignKey("classes.id"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    class_id = db.Column(db.Integer, db.ForeignKey("classes.id"), nullable=False)
 
-    __table_args__ = (PrimaryKeyConstraint(user_id, class_id), {})
+    __table_args__ = (db.PrimaryKeyConstraint(user_id, class_id), {})
 
-    cls = relationship("Class", back_populates="members")
-    user = relationship("User", back_populates="classes")
+    cls = db.relationship("Class", back_populates="members")
+    user = db.relationship("User", back_populates="classes")
 
 
 class TaskType(Enum):
@@ -94,19 +91,19 @@ class TaskType(Enum):
     REVISION = "revision"
 
 
-class Task(Base):
+class Task(db.Model):
     """Represents a task within a class which must be completed by students."""
 
     __tablename__ = "tasks"
 
-    id = Column(Integer, primary_key=True)
-    class_id = Column(Integer, ForeignKey("classes.id"), nullable=False)
-    type = Column(SQLEnum(TaskType), nullable=False)
-    title = Column(String, nullable=False)
-    description = Column(String, nullable=False)
-    due_at = Column(Date, nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    class_id = db.Column(db.Integer, db.ForeignKey("classes.id"), nullable=False)
+    type = db.Column(db.Enum(TaskType), nullable=False)
+    title = db.Column(db.String, nullable=False)
+    description = db.Column(db.String, nullable=False)
+    due_at = db.Column(db.Date, nullable=False)
 
-    cls = relationship("Class", back_populates="tasks")
+    cls = db.relationship("Class", back_populates="tasks")
 
     @property
     def formatted_date(self) -> str:

@@ -1,11 +1,12 @@
 flask
 pyyaml
 attrdict
-sqlalchemy
 psycopg2
 parse
 httpx
 gunicorn
-alembic
 argon2-cffi
 Flask-WTF
+Flask-SQLAlchemy
+Flask-Migrate
+Flask-Script

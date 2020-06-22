@@ -14,9 +14,9 @@ class ClassEdit(Route):
     path = "/<int:class_id>/edit"
 
     @authenticated(user_type=UserType.TEACHER)
-    def get(self, class_id: int) -> Response:
+    def get(self, class_id: int) -> Response:  # skipcq: PYL-R0201
         """Return the view for editing a class."""
-        cls = self.sess.query(Class).filter_by(id=class_id).first()
+        cls = Class.query.filter_by(id=class_id).first()
 
         if not cls:
             return abort(404)
@@ -29,7 +29,7 @@ class ClassEdit(Route):
     @authenticated(user_type=UserType.TEACHER)
     def post(self, class_id: int) -> Response:
         """Edit a class."""
-        cls = self.sess.query(Class).filter_by(id=class_id).first()
+        cls = Class.query.filter_by(id=class_id).first()
 
         if not cls:
             return abort(404)
@@ -43,6 +43,6 @@ class ClassEdit(Route):
             if param := request.form.get(parameter):
                 setattr(cls, parameter, param)
 
-        self.sess.commit()
+        self.app.db.session.commit()
 
         return redirect(url_for("teacher/class.details", class_id=class_id))

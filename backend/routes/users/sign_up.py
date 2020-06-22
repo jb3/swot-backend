@@ -7,7 +7,6 @@ from sqlalchemy.exc import IntegrityError
 from werkzeug.datastructures import ImmutableMultiDict
 
 from backend.config import CONFIG
-from backend.database import Session
 from backend.models import User, UserType
 from backend.route import Route
 
@@ -41,7 +40,7 @@ class UserSignUp(Route):
 
         for key in required_fields:
             # If the key is missing, return HTTP 400 Bad Request
-            if not request.form.get(key) or request.form.get(key).isspace():
+            if not form.get(key) or form.get(key).isspace():
                 yield key
 
     @staticmethod
@@ -128,10 +127,7 @@ class UserSignUp(Route):
 
         data["type"] = self._parse_type(data["type"])
 
-        # Create a new session with the database
-        sess = Session()
-
-        user = sess.query(User).filter_by(username=data["username"])
+        user = User.query.filter_by(username=data["username"])
         acc = 0
 
         if user is not None:
@@ -139,7 +135,8 @@ class UserSignUp(Route):
                 acc += 1
 
                 user = (
-                    sess.query(User)
+                    User
+                    .query
                     .filter_by(username=data["username"] + str(acc))
                     .first()
                 )
@@ -157,12 +154,11 @@ class UserSignUp(Route):
             # Commit the new user to the database if no errors have occurred
             if len(errors) == 0:
                 # Add the new user to the database
-                sess.add(new_user)
+                self.app.db.session.add(new_user)
 
-                sess.commit()
+                self.app.db.session.commit()
 
-                sess.refresh(new_user)
-                sess.close()
+                self.app.db.session.refresh(new_user)
         except IntegrityError as e:
             # An IntegrityError was raised, which means there was an issue
             # with a constraint on the database (i.e. username, email)

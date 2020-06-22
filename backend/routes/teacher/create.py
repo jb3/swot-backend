@@ -38,7 +38,7 @@ class CreateClass(Route):
 
         # Check the authenticated user does not have a class of the same name
         exists = (
-            self.sess.query(Class).filter_by(owner_id=g.user.id, name=name).first()
+            Class.query.filter_by(owner_id=g.user.id, name=name).first()
             is not None
         )
 
@@ -53,7 +53,7 @@ class CreateClass(Route):
             code = code_generate(k=6)
             # Check it doesn't exist
             code_exists = (
-                self.sess.query(Class).filter_by(code=code).first() is not None
+                Class.query.filter_by(code=code).first() is not None
             )
 
             # If it doesn't stop generating codes
@@ -63,9 +63,9 @@ class CreateClass(Route):
         cls = Class(name=name, code=code, owner_id=g.user.id)
 
         # Add the new class
-        self.sess.add(cls)
+        self.app.db.session.add(cls)
 
         # Commit changes
-        self.sess.commit()
+        self.app.db.session.commit()
 
         return redirect(url_for("teacher.index"))

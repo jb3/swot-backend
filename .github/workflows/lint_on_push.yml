@@ -49,6 +49,8 @@ jobs:
         pip install -r requirements-ci.txt
     - name: Copy config-default.yaml to config.yaml
       run: cp config-ci.yaml config.yaml
+    - name: Migrate database
+      run: python app.py db upgrade
     - name: Run pytest with coverage
       run: python -m pytest --cov=backend tests/ --html tests.html --self-contained-html
     - name: Run coverage to generate HTML coverage report
