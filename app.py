@@ -1,7 +1,7 @@
 """Entry point for Swot application."""
 
 from flask_script import Manager, Server
-from flask_migrate import Migrate, MigrateCommand
+from flask_migrate import Migrate, MigrateCommand, upgrade
 
 from backend.config import CONFIG
 from backend.route_manager import RouteManager
@@ -20,7 +20,8 @@ cli.add_command(
 )
 
 if CONFIG.host.migrate_on_startup:
-    pass
+    with manager.app.app_context():
+        upgrade()
 
 app = manager.app
 
