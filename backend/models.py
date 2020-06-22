@@ -59,7 +59,9 @@ class User(db.Model):
     )
 
     # Classes joined by this user
-    classes = db.relationship("ClassMembership", back_populates="user", cascade="delete",)
+    classes = db.relationship(
+        "ClassMembership", back_populates="user", cascade="delete"
+    )
 
 
 class ClassMembership(db.Model):

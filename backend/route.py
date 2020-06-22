@@ -3,7 +3,6 @@ from flask import Flask, Blueprint
 from flask.views import MethodView
 
 
-
 class Route(MethodView):
     """Base class for the routes."""
 
