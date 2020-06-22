@@ -17,8 +17,8 @@ class EditTask(Route):
     @authenticated(user_type=UserType.TEACHER)
     def get(self, class_id: int, task_id: int) -> Response:  # skipcq: PYL-R0201
         """Display form to the user for task editing."""
-        cls = self.sess.query(Class).filter_by(id=class_id).first()
-        task = self.sess.query(Task).filter_by(id=task_id, class_id=class_id).first()
+        cls = Class.query.filter_by(id=class_id).first()
+        task = Task.query.filter_by(id=task_id, class_id=class_id).first()
 
         if not cls or not task:
             return abort(404)
@@ -33,8 +33,8 @@ class EditTask(Route):
     @authenticated(user_type=UserType.TEACHER)
     def post(self, class_id: int, task_id: int) -> Response:
         """Update attributes of a task."""
-        cls = self.sess.query(Class).filter_by(id=class_id).first()
-        task = self.sess.query(Task).filter_by(id=task_id, class_id=class_id).first()
+        cls = Class.query.filter_by(id=class_id).first()
+        task = Task.query.filter_by(id=task_id, class_id=class_id).first()
 
         if not cls or not task:
             return abort(404)
@@ -94,6 +94,6 @@ class EditTask(Route):
             if hasattr(task, attribute):
                 setattr(task, attribute, val)
 
-        self.sess.commit()
+        self.app.db.session.commit()
 
         return redirect(url_for("teacher/class/tasks.view", class_id=class_id))
