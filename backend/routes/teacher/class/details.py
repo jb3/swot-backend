@@ -14,7 +14,7 @@ class ClassInformation(Route):
     path = "/<int:class_id>"
 
     @authenticated(user_type=UserType.TEACHER)
-    def get(self, class_id: int) -> Response:
+    def get(self, class_id: int) -> Response:  # skipcq: PYL-R0201
         """Display a portal page to the user."""
         cls = Class.query.filter_by(id=class_id).first()
 

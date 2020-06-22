@@ -1,5 +1,5 @@
 """Index page for the User API."""
-from flask import jsonify
+from flask import jsonify, Response
 
 from backend.models import User
 from backend.route import Route
@@ -11,7 +11,8 @@ class UserIndex(Route):
     name = "index"
     path = "/"
 
-    def get(self) -> str:
+    @staticmethod
+    def get() -> Response:
         """GET request to the User index."""
 
         # Create a list to store our result

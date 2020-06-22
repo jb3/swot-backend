@@ -14,7 +14,7 @@ class ClassEdit(Route):
     path = "/<int:class_id>/edit"
 
     @authenticated(user_type=UserType.TEACHER)
-    def get(self, class_id: int) -> Response:
+    def get(self, class_id: int) -> Response:  # skipcq: PYL-R0201
         """Return the view for editing a class."""
         cls = Class.query.filter_by(id=class_id).first()
 

@@ -13,7 +13,7 @@ class TaskList(Route):
     name = "view"
     path = "/<int:class_id>"
 
-    @authenticated(user_type=UserType.TEACHER)
+    @authenticated(user_type=UserType.TEACHER)  # skipcq: PYL-R0201s
     def get(self, class_id: int) -> Response:
         """Display a task page to the teachers."""
         cls = Class.query.filter_by(id=class_id).first()
