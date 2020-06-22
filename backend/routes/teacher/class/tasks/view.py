@@ -16,7 +16,7 @@ class TaskList(Route):
     @authenticated(user_type=UserType.TEACHER)
     def get(self, class_id: int) -> Response:
         """Display a task page to the teachers."""
-        cls = self.sess.query(Class).filter_by(id=class_id).first()
+        cls = Class.query.filter_by(id=class_id).first()
 
         if not cls:
             return abort(404)
@@ -29,7 +29,7 @@ class TaskList(Route):
     @authenticated(user_type=UserType.TEACHER)
     def delete(self, class_id: int) -> Response:
         """Remove a task from a class."""
-        cls = self.sess.query(Class).filter_by(id=class_id).first()
+        cls = Class.query.filter_by(id=class_id).first()
 
         if not cls:
             return abort(404)
@@ -38,7 +38,8 @@ class TaskList(Route):
             return abort(403)
 
         task = (
-            self.sess.query(Task)
+            Task
+            .query
             .filter_by(class_id=cls.id, id=request.get_json().get("task_id"))
             .first()
         )
@@ -46,7 +47,7 @@ class TaskList(Route):
         if not task:
             return abort(400)
 
-        self.sess.delete(task)
-        self.sess.commit()
+        self.app.db.session.delete(task)
+        self.app.db.session.commit()
 
         return "OK", 200
