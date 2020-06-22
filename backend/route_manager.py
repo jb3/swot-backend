@@ -7,8 +7,7 @@ from flask import Blueprint, Flask, Response, session
 from flask_wtf.csrf import CSRFProtect
 
 from .config import CONFIG
-from .database import Session, connect
-from .models import User
+from .models import db, User
 from .route import Route
 
 
@@ -33,15 +32,25 @@ class RouteManager:
         # Protect the application from Cross-Site Request Forgery
         CSRFProtect(self.app)
 
-        # Create an app instance of the DB
-        self.db = connect()
+        url = "postgresql://{}:{}@{}:{}/{}"
+        url = url.format(
+            CONFIG.db.username,
+            CONFIG.db.password,
+            CONFIG.db.host,
+            CONFIG.db.port,
+            CONFIG.db.database,
+        )
 
-        self.sess = Session()
+        self.app.config["SQLALCHEMY_DATABASE_URI"] = url
+
+        db.init_app(self.app)
+
+        self.app.db = db
 
         # Load all the routes
         self.load_routes()
 
-        self.app.context_processor(self.inject_user(self.sess))
+        self.app.context_processor(self.inject_user())
 
     def run(self: "RouteManager") -> None:
         """Start the flask application."""
@@ -56,7 +65,7 @@ class RouteManager:
         return response
 
     @staticmethod
-    def inject_user(sess: Session) -> dict:
+    def inject_user() -> dict:
         """Inject a user variable into all templates."""
 
         def inject() -> dict:
@@ -64,7 +73,7 @@ class RouteManager:
 
             if session.get("uid"):
                 uid = session.get("uid")
-                user = sess.query(User).filter_by(id=uid).first()
+                user = User.query.filter_by(id=uid).first()
 
             return dict(user=user)
 
@@ -113,7 +122,7 @@ class RouteManager:
                             f" {file} and {used_classes[member.__name__]}"
                         )
                     used_classes[member.__name__] = file
-                    member.setup(bp, self.sess)  # call the setup method of the route
+                    member.setup(bp, self.app)  # call the setup method of the route
 
         for path, bp in blueprints.items():
             if path == "index":

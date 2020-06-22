@@ -1,8 +1,7 @@
 """Base methods and functions for creating routes."""
-from flask import Blueprint
+from flask import Flask, Blueprint
 from flask.views import MethodView
 
-from backend.database import Session
 
 
 class Route(MethodView):
@@ -15,7 +14,7 @@ class Route(MethodView):
     sess = None
 
     @classmethod
-    def setup(cls: "Route", blueprint: Blueprint, db_session: Session) -> "Route":
+    def setup(cls: "Route", blueprint: Blueprint, app: Flask) -> "Route":
         """Register the view with the blueprint."""
         if not cls.path or not cls.name:
             raise RuntimeError("Routes have name and path defined")
@@ -23,7 +22,6 @@ class Route(MethodView):
         blueprint.add_url_rule(cls.path, view_func=cls.as_view(cls.name))
 
         cls.blueprint = blueprint.name
-
-        cls.sess = db_session
+        cls.app = app
 
         return cls
