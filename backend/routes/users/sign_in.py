@@ -5,7 +5,6 @@ from argon2.exceptions import VerifyMismatchError
 from flask import Response, redirect, render_template, request, session, url_for
 
 from backend.config import CONFIG
-from backend.database import Session
 from backend.models import User
 from backend.route import Route
 
@@ -72,12 +71,7 @@ class UserSignIn(Route):
 
         hasher = PasswordHasher()
 
-        # Create a new session with the database
-        sess = Session()
-
-        user = sess.query(User).filter_by(email=data["email"]).first()
-
-        sess.close()
+        user = User.query.filter_by(email=data["email"]).first()
 
         if user is None:
             errors["email"] = "Email or password incorrect"
