@@ -16,7 +16,7 @@ class ClassDelete(Route):
     @authenticated(user_type=UserType.TEACHER)
     def post(self, class_id: int) -> Response:
         """Delete a class."""
-        cls = self.sess.query(Class).filter_by(id=class_id).first()
+        cls = Class.query.filter_by(id=class_id).first()
 
         if not cls:
             return abort(404)
@@ -24,7 +24,7 @@ class ClassDelete(Route):
         if cls.owner.id != g.user.id:
             return abort(403)
 
-        self.sess.delete(cls)
-        self.sess.commit()
+        self.app.db.session.delete(cls)
+        self.app.db.session.commit()
 
         return redirect(url_for("teacher.index"))
