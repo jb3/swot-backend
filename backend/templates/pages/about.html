@@ -3,9 +3,12 @@
 {% block title %}About Swot{% endblock %}
 
 {% block content %}
+
     <div class="html-mobile-background"></div>
-    <div class="flex-container center-flex">
-      <div class="user-container">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#5000ca" fill-opacity="1" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,256C672,245,768,203,864,197.3C960,192,1056,224,1152,218.7C1248,213,1344,171,1392,149.3L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path></svg>    <div class="flex-container center-flex" style="padding-top: 0px;">
+      
+      <div class="user-container" style="padding-top: 0px;">
+        <h1 style="font-size: 3em;">About Swot</h1>
         <h1>What is Swot?</h1>
         <p>Swot is an application aimed for usage by teachers in Secondary Schools & Sixth Forms. It provides the following features:</p>
         <ul>
@@ -16,6 +19,12 @@
 
         <h1>How can I use Swot?</h1>
         <p>If you are looking to make use of Swot in your school you can sign up for a teacher account <a href="{{ url_for("users.sign_up") }}">here</a>.</p>
+
+        <h1>What is the pricing of Swot?</h1>
+        <p>During the trial period Swot is free of charge, pricing will be decided at a later date with discussion from our users.</p>
+
+        <h1>Where can I get help?</h1>
+        <p>To schedule an introductory video call please email joseph@josephbanks.me, the same email can be used for any other inquiries.</p>
 
         <h1>Who is Swot made by?</h1>
         <p>Swot is developed and maintained solely by <a href="https://josephbanks.me">Joseph Banks</a>, a student in the UK who studies Computer Science, History and Mathematics. Joseph built Swot as a part of his Computer Science coursework.</p>
