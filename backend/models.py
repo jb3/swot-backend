@@ -108,7 +108,10 @@ class Task(db.Model):
     @property
     def formatted_date(self) -> str:
         """Format the date like: dd/mm/yyyy (XX days remaining)."""
-        d = self.due_at
+        if hasattr(self.due_at, "date"):
+            d = self.due_at.date()
+        else:
+            d = self.due_at
 
         first_comp = d.strftime("%d/%m/%Y")
 
