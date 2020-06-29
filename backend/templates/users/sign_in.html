@@ -4,14 +4,13 @@
 
 {% block content %}
     <div class="html-mobile-background"></div>
-    <div class="flex-container">
+    <div class="flex-container" style="background-color: #00cba9; margin-bottom: -1px;">
       <div class="container">
           <h2 id="user-hero">Welcome back</h2>
           <h2 id="user-sub">Login to resume your learning</h2>
       </div>
 
-
-      <div class="container user-form">
+      <div class="container user-form" style="background-color: #00cba9">
         <form id="form" method="POST" action="{{ url_for('users.sign_in') }}">
           {% if errors["email"] %}
             <span class="error">{{ errors["email"] }}</span>
@@ -30,6 +29,8 @@
         </form>
       </div>
     </div>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#00cba9" fill-opacity="1" d="M0,160L60,154.7C120,149,240,139,360,154.7C480,171,600,213,720,197.3C840,181,960,107,1080,85.3C1200,64,1320,96,1380,112L1440,128L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path></svg>
+
 
     {% include "utils/recaptcha.html" %}
 {% endblock %}
