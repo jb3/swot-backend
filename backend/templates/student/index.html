@@ -32,7 +32,7 @@
           {% endif %}
           <form class="form-inline" method="POST" action="{{ url_for("student.join") }}">
             <input type="text" hidden name="csrf_token" value="{{ csrf_token() }}"/>
-            <input name="class_code" type="text" class="input-field white half-width no-vertical-margin" placeholder="Class code"/>
+            <input name="class_code" type="text" class="input-field half-width no-vertical-margin" placeholder="Enter class code"/>
             <input type="submit" class="input-confirm quarter-width no-vertical-margin left-margin" value="Join class"/>
           </form>
         </div>
