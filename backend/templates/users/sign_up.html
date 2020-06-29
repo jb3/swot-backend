@@ -4,14 +4,14 @@
 
 {% block content %}
     <div class="html-mobile-background"></div>
-    <div class="flex-container">
-      <div class="container">
+    <div class="flex-container" style="background-color: #a2d9ff;  margin-bottom: -1px; padding-bottom: 100px;">
+      <div class="container" style="background-color: #a2d9ff; margin-bottom: -1px;">
           <h2 id="user-hero">Welcome to Swot</h2>
           <h2 id="user-sub">Sign up to get started</h2>
       </div>
 
 
-      <div class="container user-form">
+      <div class="container user-form" style="background-color: #a2d9ff">
         <form id="form" method="POST" action="{{ url_for('users.sign_up') }}">
           {% if errors["full_name"] %}
             <span class="error">{{ errors["full_name"] }}</span>
@@ -55,6 +55,8 @@
         </form>
       </div>
     </div>
+
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#a2d9ff" fill-opacity="1" d="M0,192L60,176C120,160,240,128,360,101.3C480,75,600,53,720,69.3C840,85,960,139,1080,176C1200,213,1320,235,1380,245.3L1440,256L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path></svg>
 
     {% include "utils/recaptcha.html" %}
 {% endblock %}
