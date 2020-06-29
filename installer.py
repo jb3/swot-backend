@@ -1,3 +1,5 @@
+"""Install swot dependencies."""
+
 print("=== IMPORTING PIP ===")
 
 try:
