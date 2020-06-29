@@ -28,9 +28,25 @@
     {% else %}
     <li class="nav-item nav-right">
         <a class="no-decoration" href="{{ url_for("users.user") }}">
-            <p class="nav-brand">Logged in as {{ user.full_name }}</p>
+            <p class="nav-brand">User settings</p>
         </a>
     </li>
+
+    {% if user.type.value == "student" %}
+    <li class="nav-item nav-right">
+        <a class="no-decoration" href="{{ url_for("student.index") }}">
+            <p class="nav-brand">Student portal</p>
+        </a>
+    </li>
+    {% endif %}
+
+    {% if user.type.value == "teacher" %}
+    <li class="nav-item nav-right">
+        <a class="no-decoration" href="{{ url_for("teacher.index") }}">
+            <p class="nav-brand">Teacher portal</p>
+        </a>
+    </li>
+    {% endif %}
 
     <li class="nav-item nav-right">
       <a class="no-decoration" onclick="document.getElementById('logout-form').submit()">
