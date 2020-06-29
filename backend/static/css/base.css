@@ -97,7 +97,6 @@ label {
 }
 
 #form {
-  background-color: white;
   right: 3em;
   width: 40%;
   position: absolute;
@@ -137,7 +136,7 @@ label {
   height: 2em;
   font-size: 1em;
   border: none;
-  background-color: #ffffff;
+  background-color: #F4F4F4;
   padding-left: 10px;
   color: #444444;
 }
@@ -276,28 +275,6 @@ body {
   padding: 14px 16px;
   text-decoration: none;
 }
-
-.html-mobile-background {
-    position: fixed;
-    z-index: -1;
-    top: 0;
-    left: 0;
-    width: 300%;
-    height: 100%; /* To compensate for mobile browser address bar space */
-    background: url(/static/img/home-background.jpg) no-repeat;
-    background-size: 100% 100%;
-}
-
-@media (min-width: 600px) {
-    html {
-        background: url(/static/img/home-background.jpg) no-repeat center center fixed;
-        background-size: cover;
-    }
-    .html-mobile-background {
-        display: none;
-    }
-}
-
 /* Change the link color to #111 (black) on hover */
 .nav-item a:hover {
   background-color: #f0f0f0;
@@ -309,4 +286,9 @@ body {
 
 .nav-right {
     float: right;
+}
+
+.landing-jumbo {
+  padding-bottom: 300px;
+  background-color: #0099ff;
 }
