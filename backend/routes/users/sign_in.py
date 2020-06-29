@@ -75,11 +75,11 @@ class UserSignIn(Route):
 
         if user is None:
             errors["email"] = "Email or password incorrect"
-
-        try:
-            hasher.verify(user.password, data["password"])
-        except (VerifyMismatchError, AttributeError):
-            errors["email"] = "Email or password incorrect"
+        else:
+            try:
+                hasher.verify(user.password, data["password"])
+            except (VerifyMismatchError, AttributeError):
+                errors["email"] = "Email or password incorrect"
 
         # If no errors were raised then the user creation succeeded
         if len(errors) == 0:
