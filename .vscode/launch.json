@@ -9,6 +9,9 @@
             "type": "python",
             "request": "launch",
             "module": "app",
+            "env": {
+                "FLASK_DEBUG": "1"
+            },
             "args": [
                 "runserver"
             ],
