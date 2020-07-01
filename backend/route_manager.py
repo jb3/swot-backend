@@ -1,6 +1,7 @@
 """Manage routes for application."""
 import importlib
 import inspect
+from os import environ
 from pathlib import Path
 
 from flask import Blueprint, Flask, Response, session
@@ -31,15 +32,18 @@ class RouteManager:
 
         # Protect the application from Cross-Site Request Forgery
         CSRFProtect(self.app)
-
-        url = "postgresql://{}:{}@{}:{}/{}"
-        url = url.format(
-            CONFIG.db.username,
-            CONFIG.db.password,
-            CONFIG.db.host,
-            CONFIG.db.port,
-            CONFIG.db.database,
-        )
+        
+        if url := environ.get("DATABASE_URL"):
+            pass
+        else:
+            url = "postgresql://{}:{}@{}:{}/{}"
+            url = url.format(
+                CONFIG.db.username,
+                CONFIG.db.password,
+                CONFIG.db.host,
+                CONFIG.db.port,
+                CONFIG.db.database,
+            )
 
         self.app.config["SQLALCHEMY_DATABASE_URI"] = url
 
