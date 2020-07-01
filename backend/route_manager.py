@@ -1,6 +1,7 @@
 """Manage routes for application."""
 import importlib
 import inspect
+import platform
 from os import environ
 from pathlib import Path
 
@@ -69,6 +70,7 @@ class RouteManager:
     @staticmethod
     def after_request(response: Response) -> Response:
         """Process a response before it is sent to the client."""
+        response.headers["X-Pod"] = platform.uname().node
         return response
 
     @staticmethod
