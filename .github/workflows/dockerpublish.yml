@@ -36,3 +36,25 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
+
+  deploy_to_kubernetes:
+    runs-on: ubuntu-latest
+    needs: [push_docker_image]
+    
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: Azure/k8s-set-context@v1
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBECONFIG }}
+          
+      - uses: Azure/k8s-deploy@v1
+        with:
+          namespace: 'default'
+          manifests: |
+            deployment.yaml
+          images: 'docker.pkg.github.com/j03b/swot-backend/swot:${{ github.sha }}'
+          imagepullsecrets: |
+            githubpackage
+          kubectl-version: 'latest'
