@@ -32,7 +32,7 @@ jobs:
       - name: Publish Docker
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          name: j03b/swot-backend/swot
+          name: j03b/swot-backend/swot:${{ github.sha }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
