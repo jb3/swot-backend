@@ -75,6 +75,14 @@ label {
   background-color: #ff5555 !important;
 }
 
+.orange {
+  background-color: orange !important;
+}
+
+.input-confirm[disabled] {
+  cursor: default !important;
+}
+
 .type-select {
   align-self: center;
   padding-right: 10px;
@@ -164,6 +172,7 @@ label {
   background-color: black;
   color: white;
   font-weight: 10rem;
+  cursor: pointer;
 }
 
 .a-button {
@@ -216,6 +225,11 @@ body {
 
 .half-width {
   width: 50% !important;
+}
+
+.lightgreen {
+  background-color: #bbffbb;
+  color: black;
 }
 
 .quarter-width {

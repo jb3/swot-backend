@@ -72,6 +72,36 @@
 
 
         }
+
+        function markComplete(taskId) {
+          fetch(`/student/task/${taskId}/status`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": "{{ csrf_token() }}"
+            },
+            body: JSON.stringify({
+              status: "COMPLETE"
+            })
+          }).then(resp => {
+            document.location.reload();
+          })
+        };
+
+        function markUncomplete(taskId) {
+          fetch(`/student/task/${taskId}/status`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": "{{ csrf_token() }}"
+            },
+            body: JSON.stringify({
+              status: "UNCOMPLETE"
+            })
+          }).then(resp => {
+            document.location.reload();
+          })
+        };
         </script>
 
         <input type="checkbox" id="classwork" onclick="changeFilters()" checked><span class="task-type task-type-classwork">Classwork</span>
@@ -86,6 +116,13 @@
               <h3><span class="task-type task-type-{{task.type.value}}">{{task.type.value.title()}}</span> {{ task.title }}</h3>
               <p class="task-description">{{ task.description }}</p>
               <p class="footer">{{ task.cls.name }} • Due {{ task.formatted_date }}</p>
+              {% if completions[task.id] == "complete" %}
+                <button class="input-confirm half-width destructive" onclick="markUncomplete({{task.id}})">Mark as incomplete</button>
+              {% elif completions[task.id] == "awaiting_review" %}
+                <button class="input-confirm half-width orange" disabled>Awaiting review</button>
+              {% else %}
+                <button class="input-confirm half-width lightgreen" onclick="markComplete({{task.id}})">Mark as complete</button>
+              {% endif %}
             </div>
           {% endfor %}
           </div>
