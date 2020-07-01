@@ -1,4 +1,6 @@
 """Route for signing up for Swot."""
+from os import environ
+
 import httpx
 import parse
 from argon2 import PasswordHasher
@@ -63,7 +65,7 @@ class UserSignUp(Route):
             "https://www.google.com/recaptcha/api/siteverify",
             data={
                 # Secret site key for recaptcha
-                "secret": CONFIG.recaptcha.key,
+                "secret": environ.get("RECAPTCHA_KEY") or CONFIG.recaptcha.key,
                 # Response from recaptcha to the client
                 "response": gr_resp,
                 # IP of the connecting user

@@ -26,6 +26,9 @@ class RouteManager:
         # Update the flask configuration from the custom config file
         self.app.config.update(**dict(CONFIG.flask))
 
+        if key := environ.get("SECRET_KEY"):
+            self.app.config["SECRET_KEY"] = key
+
         # Register the after_request hook with flask to run a function
         # after every request
         self.app.after_request(self.after_request)

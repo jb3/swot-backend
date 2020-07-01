@@ -1,4 +1,6 @@
 """Route for signing into Swot."""
+from os import environ
+
 import httpx
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
@@ -52,7 +54,7 @@ class UserSignIn(Route):
             "https://www.google.com/recaptcha/api/siteverify",
             data={
                 # Secret site key for recaptcha
-                "secret": CONFIG.recaptcha.key,
+                "secret": environ.get("RECAPTCHA_KEY") or CONFIG.recaptcha.key,
                 # Response from recaptcha to the client
                 "response": g_recaptcha,
                 # IP of the connecting user
