@@ -58,6 +58,19 @@
           document.querySelectorAll("div[data-task='classwork']").forEach(node => {
             node.style.display = classwork ? '' : 'none'
           })
+
+          document.querySelectorAll(".taskdate").forEach(dateBlock => {
+            let tasks = dateBlock.querySelectorAll(".task");
+            tasks = [...tasks];
+
+            if (tasks.map(task => task.style.display).every(display => display == "none")) {
+              dateBlock.style.display = "none";
+            } else {
+              dateBlock.style.display = "";
+            }
+          })
+
+
         }
         </script>
 
@@ -66,6 +79,7 @@
         <input type="checkbox" id="homework" onclick="changeFilters()" checked><span class="task-type task-type-homework">Homework</span>
 
         {% for due_date, due_tasks in tasks %}
+          <div class="taskdate">
           <h2>{{ due_date }}</h2>
           {% for task in due_tasks %}
             <div class="task" data-task="{{task.type.value}}">
@@ -74,6 +88,7 @@
               <p class="footer">{{ task.cls.name }} • Due {{ task.formatted_date }}</p>
             </div>
           {% endfor %}
+          </div>
         {% endfor %}
       </div>
     </div>
