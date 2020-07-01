@@ -5,7 +5,7 @@ from itertools import groupby
 
 from flask import g, Response, render_template
 
-from backend.models import UserType
+from backend.models import UserType, TaskCompletion
 from backend.route import Route
 from backend.utils import authenticated
 
@@ -77,6 +77,12 @@ class StudentPortal(Route):
         classes = g.user.classes
 
         tasks = []
+        completions = TaskCompletion.query.filter_by(user_id=g.user.id).all()
+
+        completion_dict = {}
+
+        for completion in completions:
+            completion_dict[completion.task_id] = completion.status.value
 
         for cm in classes:
             tasks.extend(cm.cls.tasks)
@@ -84,5 +90,8 @@ class StudentPortal(Route):
         tasks_by_date = groupby(tasks, lambda task: self.format_date(task.due_at))
 
         return render_template(
-            "student/index.html", formatter=self.format_date, tasks=tasks_by_date
+            "student/index.html",
+            formatter=self.format_date,
+            tasks=tasks_by_date,
+            completions=completion_dict
         )
