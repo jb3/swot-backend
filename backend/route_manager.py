@@ -32,7 +32,7 @@ class RouteManager:
 
         # Protect the application from Cross-Site Request Forgery
         CSRFProtect(self.app)
-        
+
         if url := environ.get("DATABASE_URL"):
             pass
         else:
