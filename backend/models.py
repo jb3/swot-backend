@@ -129,3 +129,23 @@ class Task(db.Model):
             second_comp = "today"
 
         return f"{first_comp} ({second_comp})"
+
+
+class TaskCompletionStatus(Enum):
+    """Enumerable representing the type of an assigned task."""
+
+    UNCOMPLETE = "uncomplete"
+    AWAITING_REVIEW = "awaiting_review"
+    COMPLETE = "complete"
+
+
+class TaskCompletion(db.Model):
+    """Represents the status of a task that the student has marked as complete."""
+
+    __tablename__ = "task_completions"
+
+    id = db.Column(db.Integer, primary_key=True)
+    task_id = db.Column(db.Integer, db.ForeignKey("tasks.id"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+
+    status = db.Column(db.Enum(TaskCompletionStatus), nullable=False)
