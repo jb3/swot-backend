@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: swotweb
-          image: docker.pkg.github.com/j03b/swot-backend/swot
+          image: docker.pkg.github.com/jb3/swot-backend/swot
           imagePullPolicy: "IfNotPresent"
           envFrom:
             - secretRef:

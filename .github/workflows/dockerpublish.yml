@@ -27,12 +27,12 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build Docker image
-        run: docker build . --file Dockerfile -t j03b/swot-backend/swot:${{ github.sha }}
+        run: docker build . --file Dockerfile -t jb3/swot-backend/swot:${{ github.sha }}
 
       - name: Publish Docker
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          name: j03b/swot-backend/swot:${{ github.sha }}
+          name: jb3/swot-backend/swot:${{ github.sha }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
@@ -54,7 +54,7 @@ jobs:
           namespace: 'default'
           manifests: |
             deployment.yaml
-          images: 'docker.pkg.github.com/j03b/swot-backend/swot:${{ github.sha }}'
+          images: 'docker.pkg.github.com/jb3/swot-backend/swot:${{ github.sha }}'
           imagepullsecrets: |
             githubpackage
           kubectl-version: 'latest'
