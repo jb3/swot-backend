@@ -21,6 +21,7 @@
         <h3>Class settings</h3>
           <a class="a-button" href="{{ url_for("teacher/class.edit", class_id=cls.id) }}">Edit class details</a>
           <a class="a-button" href="{{ url_for("teacher/class/tasks.view", class_id=cls.id) }}">Manage tasks</a>
+          <a class="a-button" href="{{ url_for("teacher/class.completions", class_id=cls.id) }}">View completions</a>
         <h3>Members</h3>
         <table class="teacher-class-table">
           <thead>
