@@ -50,6 +50,8 @@ class User(db.Model):
     email = db.Column(db.String, unique=True, nullable=False)
     type = db.Column(db.Enum(UserType), nullable=False)
 
+    completions = db.relationship("TaskCompletion", back_populates="user")
+
     # Classes owned by this user
     owned_classes = db.relationship(
         "Class",
@@ -104,6 +106,7 @@ class Task(db.Model):
     due_at = db.Column(db.Date, nullable=False)
 
     cls = db.relationship("Class", back_populates="tasks")
+    completions = db.relationship("TaskCompletion", back_populates="task")
 
     @property
     def formatted_date(self) -> str:
@@ -147,5 +150,8 @@ class TaskCompletion(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     task_id = db.Column(db.Integer, db.ForeignKey("tasks.id"), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+
+    task = db.relationship("Task", back_populates="completions", cascade="delete")
+    user = db.relationship("User", back_populates="completions", cascade="delete")
 
     status = db.Column(db.Enum(TaskCompletionStatus), nullable=False)
