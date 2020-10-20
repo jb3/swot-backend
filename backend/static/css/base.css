@@ -3,98 +3,99 @@ body {
 }
 
 label {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  flex-wrap: nowrap;
-  margin: 12px 0;
-  cursor: pointer;
-  position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
+    margin: 12px 0;
+    cursor: pointer;
+    position: relative;
 }
 
 .task-description {
-  white-space: pre;
+    white-space: pre;
 }
 
 .footer {
-  color: #aaa;
+    color: #aaa;
 }
 
 .task-type {
-  padding: 2px;
-  padding-left: 20px;
-  padding-right: 20px;
-  border-radius: 30px;
+    padding: 2px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 30px;
 }
 
 .task-type-homework {
-  background-color: #ffaaaa;
+    background-color: #ffaaaa;
 }
 
 .task-type-revision {
-  background-color: #aaffaa;
+    background-color: #aaffaa;
 }
 
 .task-type-classwork {
-  background-color: #aaaaff;
+    background-color: #aaaaff;
 }
 
 .task {
-  background-color: #ffffff;
-  padding-right: 20px;
-  padding-left: 20px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  margin-bottom: 20px;
+    background-color: #ffffff;
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .teacher-class-table {
-  width: 100%;
-  text-align: center;
-  border-collapse: collapse;
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
 }
 
-.teacher-class-table > thead, td {
-  border-bottom: 1px solid #bbb;
-  padding: 15px;
+.teacher-class-table>thead,
+td {
+    border-bottom: 1px solid #bbb;
+    padding: 15px;
 }
 
 .class-code {
-  font-size: 2.5em;
+    font-size: 2.5em;
 }
 
-.teacher-class-table > tbody > tr:hover {
-  background-color: rgba(250, 250, 250, 0.9);
+.teacher-class-table>tbody>tr:hover {
+    background-color: rgba(250, 250, 250, 0.9);
 }
 
-.teacher-class-table > thead {
-  height: 50px;
+.teacher-class-table>thead {
+    height: 50px;
 }
 
 .destructive {
-  background-color: #ff5555 !important;
+    background-color: #ff5555 !important;
 }
 
 .orange {
-  background-color: orange !important;
+    background-color: orange !important;
 }
 
 .input-confirm[disabled] {
-  cursor: default !important;
+    cursor: default !important;
 }
 
 .type-select {
-  align-self: center;
-  padding-right: 10px;
-  margin-top: 5px;
-  margin-bottom: 5px;
+    align-self: center;
+    padding-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .error {
-  padding-left: 10px;
-  color: #f44336;
-  margin-bottom: 0px;
-  padding-bottom: 2px;
+    padding-left: 10px;
+    color: #f44336;
+    margin-bottom: 0px;
+    padding-bottom: 2px;
 }
 
 #landing-hero {
@@ -105,84 +106,84 @@ label {
 }
 
 #form {
-  right: 3em;
-  width: 40%;
-  position: absolute;
-  padding: 10px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
+    right: 3em;
+    width: 40%;
+    position: absolute;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
 /* iPad Landscape */
 @media (max-width: 1024px) {
-  .user-form {
-    padding-top: 20% !important;
-  }
+    .user-form {
+        padding-top: 20% !important;
+    }
 }
 
 .input-field {
-  align-self: center;
-  margin-bottom: 2%;
-  width: 95%;
-  height: 2em;
-  font-size: 1em;
-  border: none;
-  background-color: #F4F4F4;
-  padding-left: 10px;
-  color: #898989;
+    align-self: center;
+    margin-bottom: 2%;
+    width: 95%;
+    height: 2em;
+    font-size: 1em;
+    border: none;
+    background-color: #F4F4F4;
+    padding-left: 10px;
+    color: #898989;
 }
 
 .input-field[disabled] {
-  color: #000000;
+    color: #000000;
 }
 
 .teacher-input-field {
-  align-self: center;
-  margin-bottom: 2%;
-  width: 95%;
-  height: 2em;
-  font-size: 1em;
-  border: none;
-  background-color: #F4F4F4;
-  padding-left: 10px;
-  color: #444444;
+    align-self: center;
+    margin-bottom: 2%;
+    width: 95%;
+    height: 2em;
+    font-size: 1em;
+    border: none;
+    background-color: #F4F4F4;
+    padding-left: 10px;
+    color: #444444;
 }
 
 .teacher-textarea {
-  align-self: center;
-  margin-bottom: 2%;
-  width: 95%;
-  height: 10em;
-  font-size: 1em;
-  border: none;
-  resize: vertical !important;
-  background-color: #ffffff;
-  padding-left: 10px;
-  color: #444444;
+    align-self: center;
+    margin-bottom: 2%;
+    width: 95%;
+    height: 10em;
+    font-size: 1em;
+    border: none;
+    resize: vertical !important;
+    background-color: #ffffff;
+    padding-left: 10px;
+    color: #444444;
 }
 
 .input-confirm {
-  align-self: center;
-  margin-top: 2%;
-  width: 100%;
-  height: 2em;
-  font-size: 1em;
-  border: none;
-  background-color: black;
-  color: white;
-  font-weight: 10rem;
-  cursor: pointer;
+    align-self: center;
+    margin-top: 2%;
+    width: 100%;
+    height: 2em;
+    font-size: 1em;
+    border: none;
+    background-color: black;
+    color: white;
+    font-weight: 10rem;
+    cursor: pointer;
 }
 
 .a-button {
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  background-color: black;
-  color: white;
-  text-decoration: none;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    background-color: black;
+    color: white;
+    text-decoration: none;
 }
 
 #user-hero {
@@ -204,49 +205,49 @@ body {
 }
 
 .flex-container {
-  display: flex;
-  align-items: center;
-  width: 100%;
+    display: flex;
+    align-items: center;
+    width: 100%;
 }
 
 .center-flex {
-  justify-content: center;
+    justify-content: center;
 }
 
 .form-inline {
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
 }
 
 .form-inline input {
-  vertical-align: middle;
+    vertical-align: middle;
 }
 
 .half-width {
-  width: 50% !important;
+    width: 50% !important;
 }
 
 .lightgreen {
-  background-color: #bbffbb;
-  color: black;
+    background-color: #bbffbb;
+    color: black;
 }
 
 .quarter-width {
-  width: 25% !important;
+    width: 25% !important;
 }
 
 .eigth-width {
-  width: 12.5% !important;
+    width: 12.5% !important;
 }
 
 .left-margin {
-  margin-left: 20px;
+    margin-left: 20px;
 }
 
 .no-vertical-margin {
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
 }
 
 .container {
@@ -267,31 +268,32 @@ body {
 }
 
 .white {
-  background-color: #ffffff;
+    background-color: #ffffff;
 }
 
 #navbar {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: white;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: white;
 }
 
 .nav-item {
-  float: left;
+    float: left;
 }
 
 .nav-item a {
-  display: block;
-  color: black;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
 }
+
 /* Change the link color to #111 (black) on hover */
 .nav-item a:hover {
-  background-color: #f0f0f0;
+    background-color: #f0f0f0;
 }
 
 .nav-left {
@@ -303,6 +305,11 @@ body {
 }
 
 .landing-jumbo {
-  padding-bottom: 300px;
-  background-color: #0099ff;
+    padding-bottom: 300px;
+    background-color: #0099ff;
+}
+
+.completion-box {
+  background-color: #E7E7E7;
+  padding: 20px;
 }
