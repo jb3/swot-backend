@@ -1,0 +1,56 @@
+{%  extends 'pages/base.html' %}
+
+{% block title %}Completions of {{cls.name}}{% endblock %}
+
+{% block content %}
+    <script>
+      const updateCompletion = (member_id, task_id, status) => {
+        const headers = new Headers();
+        headers.append("X-CSRFToken", "{{ csrf_token() }}")
+        headers.append("Content-Type", "application/json")
+
+        fetch(`/teacher/class/{{ cls.id }}/completions`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": "{{ csrf_token() }}"
+            },
+            body: JSON.stringify({
+              taskID: task_id,
+              status: status,
+              userID: member_id
+            })
+          }).then(resp => {
+            document.location.reload();
+          })
+      };
+    </script>
+
+    <div class="html-mobile-background"></div>
+    <div class="flex-container center-flex">
+      <div class="user-container">
+        <h1>Completions – {{ cls.name }}</h1>
+
+        {% for task in cls.tasks %}
+          {% if task.id in render_tasks %}
+            <h3>{{ task.title }}</h3>
+
+            {% for completion in task.completions %}
+              {% if completion.status.value == "awaiting_review" %}
+                <div class="completion-box">
+                  <h4>{{ completion.user.full_name }}</h4>
+                  <button class="input-confirm lightgreen half-width" onclick="updateCompletion({{completion.user.id}}, {{completion.task.id}}, 'complete')">Mark as complete</button>
+                  <button class="input-confirm destructive half-width" onclick="updateCompletion({{completion.user.id}}, {{completion.task.id}}, 'uncomplete')">Mark as incomplete</button>
+                </div>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+
+        {% if render_tasks|length == 0 %}
+          <h3>No completions pending</h3>
+        {% endif %}
+      </div>
+    </div>
+
+  {% endblock %}
