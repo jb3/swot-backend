@@ -86,7 +86,7 @@ class StudentPortal(Route):
 
         for cm in classes:
             for task in cm.cls.tasks:
-                if completion_dict[task.id] != "complete":
+                if completion_dict.get(task.id) != "complete":
                     tasks.append(task)
 
         tasks_by_date = groupby(tasks, lambda task: self.format_date(task.due_at))
