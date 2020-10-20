@@ -5,7 +5,7 @@ from itertools import groupby
 
 from flask import g, Response, render_template
 
-from backend.models import UserType, TaskCompletion, TaskCompletionStatus
+from backend.models import UserType, TaskCompletion
 from backend.route import Route
 from backend.utils import authenticated
 

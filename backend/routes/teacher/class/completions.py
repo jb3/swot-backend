@@ -1,6 +1,6 @@
 """Provide information on task completions of a class to a teacher."""
 
-from flask import Response, abort, g, render_template, request, jsonify
+from flask import Response, abort, g, render_template, request
 
 from backend.models import (
     Class, UserType, ClassMembership,
