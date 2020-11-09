@@ -72,7 +72,6 @@ def test_type_parse() -> None:
     """Test the parsing of types into enumerables."""
     assert UserSignUp._parse_type("teacher") is UserType.TEACHER
     assert UserSignUp._parse_type("student") is UserType.STUDENT
-    assert UserSignUp._parse_type("parent") is UserType.PARENT
 
 
 def test_unique_constraint_parser() -> None:

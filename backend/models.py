@@ -31,14 +31,13 @@ class UserType(Enum):
 
     STUDENT = "student"
     TEACHER = "teacher"
-    PARENT = "parent"
 
 
 class User(db.Model):
     """
     Class for base users.
 
-    This encompasses teachers, students and parents.
+    This encompasses teachers and students
     """
 
     __tablename__ = "users"
