@@ -53,7 +53,7 @@ class UserSignUp(Route):
         elif u_type == "teacher":
             parsed_type = UserType.TEACHER
         else:
-            parsed_type = UserType.PARENT
+            raise Exception("Unknown type provided")
 
         return parsed_type
 
@@ -99,7 +99,7 @@ class UserSignUp(Route):
         for key in self._validate_required(request.form):
             errors[key] = f"{key.replace('_', ' ').capitalize()} is not present"
 
-        if request.form.get("type") not in ["student", "teacher", "parent"]:
+        if request.form.get("type") not in ["student", "teacher"]:
             # If the passed type is not of one in the above list, raise 400
             errors["type"] = "Invalid type"
 
