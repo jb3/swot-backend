@@ -37,7 +37,7 @@ class UserSignUp(Route):
             "password_confirm",
             "type",
             "full_name",
-            "g-recaptcha",
+            "recaptcha-token",
         ]
 
         for key in required_fields:
@@ -107,7 +107,7 @@ class UserSignUp(Route):
         data = request.form.copy()
 
         # Remove and save the google recaptcha score
-        g_recaptcha = data.pop("g-recaptcha")
+        g_recaptcha = data.pop("recaptcha-token")
 
         recaptcha_response = self._do_recaptcha(g_recaptcha)
 
