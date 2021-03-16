@@ -33,7 +33,7 @@ class UserSignIn(Route):
         required_fields = [
             "email",
             "password",
-            "g-recaptcha",
+            "recaptcha-token",
         ]
 
         errors = {}
@@ -47,7 +47,7 @@ class UserSignIn(Route):
         data = request.form.copy()
 
         # Remove and save the google recaptcha score
-        g_recaptcha = data.pop("g-recaptcha")
+        g_recaptcha = data.pop("recaptcha-token")
 
         recaptcha_response = httpx.post(
             # Request to Google to get the recaptcha score for the request
