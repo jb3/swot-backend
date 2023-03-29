@@ -30,7 +30,7 @@ jobs:
         run: docker build . --file Dockerfile -t jb3/swot-backend/swot:${{ github.sha }}
 
       - name: Publish Docker
-        uses: elgohr/Publish-Docker-Github-Action@master
+        uses: elgohr/Publish-Docker-Github-Action@v5
         with:
           name: jb3/swot-backend/swot:${{ github.sha }}
           username: ${{ github.actor }}
